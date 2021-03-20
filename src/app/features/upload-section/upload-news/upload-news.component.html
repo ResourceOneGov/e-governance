@@ -1,0 +1,73 @@
+<!-- <form [formGroup]="newsForm" class="mt-5">
+    <div class="d-flex justify-content-around w-100">
+        <div class="p-2 col-md-12">
+            <mat-form-field appearance="outline" class="w-100">
+                <input matInput placeholder="Title of the News" formControlName="title" required>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-around w-100">
+        <div class="p-2 col-md-12">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Description</mat-label>
+                <textarea matInput placeholder="Description" formControlName="description" required></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-around w-100">
+        <div class="p-2 col-md-12 file-uploaddiv">
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Upload Image</mat-label>
+                <ngx-mat-file-input #newsImageUploader formControlName="images" placeholder="Images only" [accept]="'image/*'">
+                </ngx-mat-file-input>
+                <button mat-icon-button matSuffix *ngIf="!newsImageUploader.empty" (click)="newsImageUploader.clear($event)">
+                    <mat-icon>clear</mat-icon>
+                </button>
+                <mat-icon matSuffix>attachment</mat-icon>
+            </mat-form-field>
+        </div>
+    </div>
+    
+    <div class="d-flex justify-content-center align-items-center w-100">
+        <button mat-raised-button class="btn btn-success" (click)="uploadFile()"
+            [disabled]="!newsForm.valid || newsImageUploader.empty">Upload News
+        </button>
+    </div>
+    
+    <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-grid-pulse" 
+        [fullScreen] = "true">
+        <p *ngIf="progress > 0 && progress < 100" style="color: white" >{{ progressMessage }} </p>
+        <p *ngIf="progress == 0" style="color: white" > Uploading ... </p>
+        <p *ngIf="progress == 100" style="color: white" > Progressing ... </p>
+    </ngx-spinner>  
+</form> -->
+<div class="d-flex justify-content-between my-3">
+    <div>
+        <button *ngIf="latestNews?.length > 0" mat-button (click)="accordion.openAll()">
+            {{'uploadSection.expandAll' | translate}}</button>
+        <button *ngIf="latestNews?.length > 0" mat-button (click)="accordion.closeAll()">
+            {{'uploadSection.collapseAll' | translate}}</button>
+    </div>
+    <div>
+        <button mat-raised-button color="primary" (click)="openDialog()">{{'uploadSection.addNews' | translate}}</button>
+    </div>
+</div>
+
+<mat-accordion multi>
+    <mat-expansion-panel *ngFor="let news of latestNews">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{news.title}}
+        </mat-panel-title>
+        <mat-panel-description class="d-flex justify-content-end">  
+            <mat-icon color="warn" (click)="deleteNews($event, news)">delete</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="d-flex">
+          <div class="col-md-3 p-0"> <img class="w-100" src={{news.images[0]}}/> </div>
+          <div class="col-md-9"> {{news.content}} </div>
+      </div>
+    </mat-expansion-panel> 
+</mat-accordion>

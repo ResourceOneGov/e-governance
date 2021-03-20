@@ -1,0 +1,39 @@
+<div class="d-flex flex-column">
+   <div class="px-2 pt-2 col-md-7 ml-3">
+      <form [formGroup]="volunteer" class="mb-2">
+         <mat-form-field class="w-100" appearance="outline">
+            <mat-label>{{'questionnaires.selectVideo' | translate}}</mat-label>
+            <mat-select formControlName = "video" placeholder=" Select Training" #videoSelect
+            (selectionChange)="getVideosCharts($event)">
+               <mat-option>
+               <ngx-mat-select-search formControlName = "videoFilter" 
+                     placeholderLabel="Find Video..." 
+                     noEntriesFoundLabel="'no matching video found'"
+               ></ngx-mat-select-search>
+               </mat-option>
+               <mat-option *ngFor="let video of filteredVideos |async" [value]="video._id">
+               {{ video.name }}
+            </mat-option>
+            </mat-select>
+         </mat-form-field>
+      </form>
+  </div>
+   <div class="d-flex justify-content-between flex-row flex-wrap">
+      <mat-card class="p-1 ml-4 col-md-5">
+         <div>
+             <p class="ml-3">Total Users</p>
+             <p class="ml-3">{{totalUsersAssigned}}</p>
+         </div>
+         <div class="greyColor" *ngIf="totalUsersAssigned === 0"></div>
+         <app-pie-chart *ngIf="totalUsersAssigned !== 0" [chartOptions]="totalVideosSummary"></app-pie-chart>
+      </mat-card>
+      <mat-card class="p-1 mr-3 col-md-5">
+         <div>
+             <p class="ml-3">Assessment</p>
+             <p class="ml-3">{{totalAssessment}}</p>
+         </div>
+         <div class="greyColor" *ngIf="totalAssessment === 0"></div>
+         <app-pie-chart *ngIf="totalAssessment !== 0" [chartOptions]="totalAssessmentSummary"></app-pie-chart>
+      </mat-card>
+   </div>
+</div>

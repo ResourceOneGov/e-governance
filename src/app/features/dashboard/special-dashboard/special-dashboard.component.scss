@@ -1,0 +1,301 @@
+.main-container{
+    background-color: #fff;
+    height:100vh;
+    nav {
+        .nav.nav-tabs{
+            border: none;
+            color:#fff;
+            background:#326c92;
+            border-radius:0;
+            .nav-item{
+                &.nav-link{
+                    border: none;
+                    padding: 18px 25px;
+                    color:#fff;
+                    background:#326c92;
+                    border-radius:0;
+                    border-right:1px solid #dedede;
+                    span{
+                        padding-top: 15px;
+                        display: inline-block;
+                    }
+                    &:focus{
+                        border: none;
+                        background: #224963;
+                        color:#fff;
+                        border-radius:0;
+                        transition:background 0.20s linear;
+                    }
+                    &.active{
+                        border: none;
+                        padding: 18px 25px;
+                        color:#fff;
+                        background:#224963;
+                        border-radius:0;
+                        border-right:1px solid #dedede;
+                    }
+                }
+            }
+        }
+    } 
+    .tab-content{
+        background: #fdfdfd;
+        line-height: 25px;
+        border: 1px solid #ddd;
+        border-top:5px solid #224963;
+        border-bottom:5px solid #224963;
+        padding:30px 25px;
+        .attendance{
+            .graph{
+                width: 23%;
+                position: relative;
+                height: 175px;
+                box-shadow: 0 0 4px;
+                margin: 0 30px 10px 0px;
+                .graph-icon{
+                    width: 52px;
+                    float: right;
+                    margin: 10px 10px;
+                }
+                .graph-container{
+                    position: absolute;
+                    bottom: 0px;
+                    p{
+                        font-size:18px;
+                    }
+                    span{
+                        font-weight: 500;
+                        font-size: 16px;
+                    }
+                    .graph-bg{
+                        width: 100%;
+                        margin: auto;
+                        display: block;
+                    }
+                }
+                &.slo-graph{
+                    background-color:#3A7AFE;
+                    p,span{
+                        color:#fff !important;
+                    }
+                }
+                &.dlo-graph{
+                    p,span{
+                        color: #29bd89;
+                    }
+                }
+                &.mlo-graph{
+                    background-color:#0FCA93;
+                    p,span{
+                        color:#fff !important;
+                    }
+                }
+                &.callcenter-graph{
+                    p,span{
+                        color: #FF6383;
+                    }
+                }
+            }
+            #mlo-attendance{
+                width:97%;
+                .card-header{
+                    background-color:#0FCA93;
+                    color:#fff;
+                }
+                .card-body{
+                    ul{
+                        li{
+                            width:200px;
+                            margin:5px 0px;
+                        }
+                    }
+                    p{
+                        color:#23bb44
+                    }
+                }
+            }
+        }
+        
+        .volunteer{
+            .donut-graph{
+                width: 47.5%;
+                margin: 0 28px 10px 0px;
+                box-shadow:0 2px 3px;
+                border-radius:3px;
+                background: #fff;
+                highcharts-chart{
+                    width:100%;
+                    padding-left:15%;
+                }
+            }
+            .bar-graph{
+                width:97%;
+                height:400px;
+                box-shadow:0 0 3px;
+                border-radius:3px;
+                highcharts-chart{
+                    width:100%;
+                }
+            }
+        }
+        .leaderBoardTable{
+          thead{
+            tr{
+              th{
+                background-color:#135b8d;
+                color:#ffff;
+              }
+            }
+          }
+        }
+        
+        .training-section{
+            .table-bordered{
+                thead{
+                    th{
+                        border:1px solid #b5b9bd;
+                        background-color: #51687d;
+                        color:#fff;
+                        &:nth-child(1){
+                            width:30px;
+                        }
+                    }
+                }
+                tbody{
+                    td{
+                        border: 1px solid #b5b9bd;
+                        &:nth-child(1){
+                            width:66px;
+                        }
+                        &:nth-child(2){
+                            width:800px;
+                        }
+                    }
+                }
+            }
+            .collapse-table{
+                tbody{
+                    td{
+                        &:nth-child(1){
+                            width:4%;
+                        }
+                        &:nth-child(2){
+                            width:58.7%;
+                        }
+                    }
+                }
+            }
+        }
+        .work-reports{
+            .doc-card{
+                width: 150px;
+                .card-body{
+                    background-color:#eaeaea;
+                    
+                    p{
+                        font-size:12px;
+                        color:#135b8d;
+                        font-weight:600;
+                    }
+                    .fa-file{
+                        font-size:40px;
+                        color:#6998B7
+                    }
+                }
+                .card-footer{
+                    background:#dedede;
+                }
+            }
+        }
+    } 
+    
+    .modal{
+        &.show{
+            background: rgba(0,0,0,0.5);
+        }
+    }
+    
+    
+    
+    @media only screen and (max-width: 1870px) and(min-width:1200px) {
+        .graph {
+            width: 20% !important;
+            margin: 0 50px 10px 0px !important;
+        }
+        .bar-graph{
+            width:98% !important;
+            highcharts-chart{
+                width:97%;
+            }
+        }
+        .donut-graph{
+            width: 48%;
+            margin: 0 25px 10px 0px;
+        }
+    }
+    @media only screen and(max-width:1200px){
+        .graph {
+            width: 21% !important;
+            margin: 0 30px 10px 0px !important;
+        }
+        .bar-graph{
+            highcharts-chart{
+                width:97%;
+            }
+        }
+    }
+    @media only screen and (max-width:1675px){
+        .donut-graph{
+            width: 47% !important;;
+            margin: 0 25px 10px 0px !important;;
+        }
+         .bar-graph{
+            width: 100% !important;
+        }
+    }
+}
+.mat-header-cell{
+  font-size: 16px;
+  letter-spacing: 0.6px;
+  padding-left:16px;
+  font-weight: bold;
+}
+th.cdk-column-stakeholders{
+  background-color:#c9ddf5;
+}
+.cdk-column-stakeholders{
+  background-color:#F8E7CB;
+  font-weight: bold;
+}
+th.cdk-column-green{
+  background-color:#01FF00;
+  color: #000;
+}
+th.cdk-column-blue{
+ background-color:#6E9EEA;
+ color: #000; 
+}
+th.cdk-column-orange{
+  background-color:#fdda66;
+  color: #000; 
+}
+th.cdk-column-yellow{
+  background-color: yellow;
+  color: #000; 
+}
+th.cdk-column-red{
+  background-color:red;
+  color: #fff; 
+}
+th.cdk-column-black{
+  background-color:#000;
+  color: #fff; 
+}
+th.cdk-column-total{
+  background-color:#135b8d;
+  color: #fff;
+}
+td.mat-cell {
+  padding-left:24px;
+}
+

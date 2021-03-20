@@ -1,0 +1,85 @@
+<!-- <div class="modal fade show" id="cmo" tabindex="-1" role="dialog" data-backdrop="false" aria-labelledby="cmo" aria-hidden="true"> -->
+  <!-- <div class="modal-dialog modal-dialog-centered modal-lg" role="document"> -->
+    <!-- <div class="modal-content"> -->
+      <div>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">{{data.stakeholders}} Issue Tracker Details
+          <form [formGroup]="selectDistrictForm">
+          <mat-form-field appearance="fill">
+              <mat-label>District</mat-label>
+              <mat-select formControlName = "district" disableRipple>
+                <mat-option *ngFor="let district of this.filteredDistricts" [value]="district">{{district}}</mat-option>
+              </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Select an Color</mat-label>
+            <mat-select formControlName = "color"  disableRipple>
+              <mat-option *ngFor="let color of colors" [value]="color">{{color}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        <button class="submit-btn" type="submit" mat-button (click)=" getIssueDistrictInfo()" >Submit</button>
+        <!-- <button mat-flat-button color="warn" (click)="resetFilters()">Reset</button> -->
+      </form>
+        </h5>
+        <button type="button" class="close" aria-label="Close" (click)="dialogClose()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- <div class="mat-elevation-z8 popup-table">
+        <table mat-table [dataSource]="dataSource" class="w-100 table-bordered">
+
+
+          <ng-container matColumnDef="stakeholders" >
+            <th style="background-color: #C9DDF5;" mat-header-cell *matHeaderCellDef> Stakeholders </th>
+            <td mat-cell *matCellDef="let element" > <a *ngIf= "element.stakeholders != 'Total'" (click)="getIssueDistrictInfo(element, '')" [routerLink]>{{element.stakeholders}}</a>
+            <span *ngIf = "element.stakeholders === 'Total'">Total</span></td>
+
+          </ng-container>
+
+          <ng-container matColumnDef="green" >
+            <th style="background-color:#01FF00;" mat-header-cell *matHeaderCellDef class="p-4"> Green </th>
+            <td mat-cell *matCellDef="let element" class="p-4" (click)="getIssueDistrictInfo(element, 'green')"> {{element.green}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="blue">
+            <th style="background-color:#6E9EEA;" mat-header-cell *matHeaderCellDef class="p-4"> Blue </th>
+            <td mat-cell *matCellDef="let element" class="p-4" (click)="getIssueDistrictInfo(element, 'blue')"> {{element.blue}}  </td>
+          </ng-container>
+
+          <ng-container matColumnDef="orange">
+            <th style="background-color:#FDDA66;" mat-header-cell *matHeaderCellDef class="p-4"> Orange </th>
+            <td mat-cell *matCellDef="let element" class="p-4" (click)="getIssueDistrictInfo(element, 'orange')"> {{element.orange}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="yellow">
+            <th style="background-color:#FFFF00;" mat-header-cell *matHeaderCellDef class="p-4"> Yellow </th>
+            <td mat-cell *matCellDef="let element" class="p-4" (click)="getIssueDistrictInfo(element, 'yellow')"> {{element.yellow}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="red">
+            <th style="background-color:red;color:#fff" mat-header-cell *matHeaderCellDef class="p-4"> Red </th>
+            <td mat-cell *matCellDef="let element" class="p-4" (click)="getIssueDistrictInfo(element, 'red')"> {{element.red}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="black">
+            <th style="background-color:#000;color:#fff" mat-header-cell *matHeaderCellDef class="p-4"> Black</th>
+            <td mat-cell *matCellDef="let element" class="p-4" (click)="getIssueDistrictInfo(element, 'black')"> {{element.black}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="total">
+            <th style="background-color:#135B8D;color:#fff" mat-header-cell *matHeaderCellDef class="p-4"> Total </th>
+            <td mat-cell *matCellDef="let element" class="p-4">{{element.total}}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+      </div> -->
+    </div>
+      <!-- <mat-paginator [length]="issueDistrictInfoLength" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+
+
+

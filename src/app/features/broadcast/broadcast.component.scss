@@ -1,0 +1,76 @@
+.broadcastmain-container{
+    height: calc(100vh - 55px);
+}
+
+#agora_local{
+    height: calc(100% - 55px);
+    width: 100%;
+    position:absolute;
+}
+.broadcast-btn {
+    position: absolute;
+    z-index: 99;
+    bottom:50px;
+}
+
+.l-40 {
+    left: 5%;
+}
+
+.r-40 {
+    right:5%;
+}
+
+.live-btn {
+    top: 50%;
+    left: 40%;
+    position: absolute;
+}
+
+.timer {
+    top: 42%;
+    left: 34%;
+    position: absolute;
+    font-size: 1.5rem;
+}
+
+.broadcast-info {
+    font-size:2rem;
+}
+
+.peopleJoined{
+    position: absolute;
+    z-index: 99;
+    bottom: 100px;
+    font-size: 25px;
+    color: white;
+    height:54px;
+    top: 65px;
+    left: 25px;
+    font-weight: bold;
+    padding: 0.5rem;
+}
+
+.mat-datepicker-popup{
+    top:50px !important;
+}
+
+.ngx-mat-timepicker{
+    form{
+        table{
+            tbody{
+                tr{
+                    td{
+                        padding:0px !important; 
+                    }
+                }
+            }
+        } 
+    }  
+}
+
+.mat-form-field-flex {
+    background-color: initial !important;
+    padding: 3px !important;
+}
+

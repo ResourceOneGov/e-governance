@@ -1,0 +1,93 @@
+.otp {
+    background: url("../../../../assets/img/login_background.jpg") no-repeat center center ;
+    background-size: cover;
+}
+
+
+.login {
+    background: url("../../../../assets/img/login_BG.png") no-repeat center center ;
+    background-size: cover;
+}
+
+.btn-blue-theme{
+    background-color: #0062BD;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.bg {
+    height: 100vh;
+    padding-right: 0;
+}
+.logo{
+    position: relative;
+    z-index: 100;
+    margin-top: 10%;
+
+}
+.logo-outer{
+    background-color: none;
+    border-radius: 100%;
+    padding: 10px;
+    // width: 180px;
+    // height: 180px;
+    border: 2px solid #fff;
+}
+.logo-wrap{
+    background-color: #fff;
+    border-radius: 100%;
+    padding: 10px;
+    width: 160px;
+    height: 160px;
+}
+.logo-wrap img{
+    width: 140px;
+}
+.mat-card{
+    margin: 0 auto;
+    // margin-top: 50px;
+    // margin-bottom: 10%;
+    // padding-top: 0 !important;
+    z-index: 10;
+}
+  
+.colorbar{
+    height:20%;
+    width: 100%;
+    background-color: #000;
+    position: absolute;
+    left: 0px;
+    z-index: 0;
+   
+}
+.top--colorbar{
+    top:0;
+    background-color: #0062BD;
+    
+}
+.bot--colorbar{
+    bottom: 0;
+    background-color: #008E45;
+}
+@media (min-width: 768px) and  (max-width: 1023px){
+.mat-card
+{
+    margin-bottom: 15% !important;
+    margin-right: 15px;
+  
+}
+}
+@media (min-width: 768px) {
+    .d-none-img{
+        display: block;
+    }
+}
+@media (max-width: 767px) {
+    .d-none-img{
+        display: none;
+    }
+    .mat-card{
+        margin-bottom: 20%;
+    }
+}

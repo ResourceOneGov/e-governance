@@ -1,0 +1,30 @@
+
+<div class="upload-container d-flex justify-content-center align-items-center m-5 h-100">
+    <mat-card class="w-100">        
+        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+        <mat-card-header>
+            <mat-card-title>{{'uploadSection.uploadSection' | translate}}</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <mat-tab-group class="p-2">
+                <mat-tab label="{{'uploadSection.attendance' | translate}}">
+                    <app-upload-attendance></app-upload-attendance>
+                </mat-tab>
+                <mat-tab label="{{'uploadSection.news' | translate}}"> 
+                    <app-upload-news></app-upload-news>
+                </mat-tab>
+                <mat-tab label="{{'uploadSection.carousel' | translate}}">
+                    <app-upload-carousel></app-upload-carousel>
+                </mat-tab>
+                <mat-tab label="{{'uploadSection.user' | translate}}">
+                    <app-upload-user></app-upload-user>
+                </mat-tab>
+                <mat-tab label="{{'uploadSection.issue' | translate}}">
+                    <app-upload-issue></app-upload-issue>
+                </mat-tab>
+              </mat-tab-group>
+
+        </mat-card-content>   
+    </mat-card>
+</div>

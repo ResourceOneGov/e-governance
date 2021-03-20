@@ -1,0 +1,30 @@
+<div class="p-3">
+    <div class="d-flex row flex-column justify-content-center overflow-hidden">
+        <h4 class="card-title">{{header}} Live Broadcast!</h4>
+        <div class="font-italic" *ngIf="data.type ==='reschedule'">You have scheduled event {{ data.broadCastScheduledAt }}</div>
+    </div>
+    <form class="d-flex row flex-column justify-content-center overflow-hidden mt-4" [formGroup]="scheduleBroadCastForm">
+        <div class="mb-4">
+            <mat-form-field class="w-100">
+                <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" formControlName="scheduledAt"
+                [min]="minDate" (keydown)="handleDateInput($event)">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <ngx-mat-datetime-picker #picker>
+                </ngx-mat-datetime-picker>
+            </mat-form-field>
+        </div>
+        
+        <div class="d-flex flex-row justify-content-between align-items-stretch">
+            <button mat-stroked-button color="warn" (click)="dialogRef.close();">Cancel</button>
+            <button mat-stroked-button color="primary" (click)="scheduleBroadcast($event)">
+                {{header}}
+                <mat-spinner *ngIf="showSpinner"></mat-spinner>
+            </button>
+        </div>
+    </form>
+</div>
+<!-- <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+        [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
+        [touchUi]="touchUi" [color]="color" [enableMeridian]="enableMeridian" 
+        [disableMinute]="disableMinute" [hideTime]="hideTime">
+        </ngx-mat-datetime-picker> -->

@@ -1,0 +1,24 @@
+
+
+@mixin bg-color($bgColor) {
+    background-color: $bgColor;
+}
+.chart{
+    @include bg-color(#fff);
+    .container {
+        display: flex;
+        justify-content: space-around;
+        font-size: 0.7rem;
+    
+        .count-container {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    
+    .chartContainer {
+        display: flex;
+        justify-content: space-around;
+        font-size: 0.7rem;
+    }
+}

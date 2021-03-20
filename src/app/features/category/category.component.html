@@ -1,0 +1,47 @@
+<div class="category-container d-flex justify-content-center align-items-center m-5 h-100 bg-secondary">
+    <mat-card class="w-100">
+        <mat-card-header class="justify-content-between  m-4 border-bottom border-secondary">
+            <mat-card-title>{{'category.category' | translate}}</mat-card-title>
+            <mat-icon>info</mat-icon>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="categoryForm">
+                <div class="d-flex justify-content-around m-2 flex-wrap">
+                    <div class="col-md-6"> 
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'category.enterCategory' | translate}}</mat-label>
+                            <input matInput placeholder="Enter Category" value="" formControlName="name" type="text" required>
+                        </mat-form-field>
+                        <p *ngIf="f.name.touched && f.name.invalid && f.name.errors.cannotStartWithSpace" class="text-danger">
+                            Category name cannot start with white spaces.
+                        </p>
+                    </div>
+                    <div class="col-md-6"> 
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'category.chooseCategoryType' | translate}}</mat-label>
+                            <mat-select formControlName="type" required>
+                                <mat-option *ngFor="let type of types" [value]="type.type">{{type.name}}</mat-option>
+                              </mat-select>
+                          </mat-form-field>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center align-items-center w-100">
+                    <button type="button" mat-raised-button class="btn btn-success align-self-center col-md-5" 
+                            (click)="onCreateCategory()"
+                            [disabled]="!categoryForm.valid">{{'category.addCategory' | translate}}
+                    </button>
+                </div>
+                <mat-list class="col-12 m-2">
+                    <mat-toolbar *ngFor="let category of categories; let i = index;" class="col-12 my-3">
+                        <div class="p-1 col-10 w-100">{{category.name}}</div>
+                        <div class="col-2 w-100 align-content-stretch align-self-center">
+                            <button type="button" mat-icon-button color="warn" (click)="onDeleteCategory(category)">
+                                <mat-icon>delete</mat-icon>
+                                </button>
+                        </div>                        
+                    </mat-toolbar>
+                </mat-list> 
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

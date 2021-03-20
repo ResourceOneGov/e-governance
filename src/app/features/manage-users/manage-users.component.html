@@ -1,0 +1,151 @@
+<div class="d-flex justify-content-center rounded-lg align-items-center m-5 h-100 main-container">
+    <mat-card class="align-self-center w-100">
+      <div *ngIf="error" class="alert alert-danger error-msg">{{error}}</div>
+        <mat-card-header class="justify-content-between m-4 border-bottom border-secondary">
+            <mat-card-title>{{'user.manageUsers' | translate}}</mat-card-title>
+              <mat-icon matTooltip="{{'user.manageUserInfo' | translate}}">info</mat-icon>
+            <mat-card-subtitle>
+
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="manageUsersForm">
+
+                <div class="d-flex flex-start flex-wrap p-2">
+                  <mat-form-field class="mt-2 col-md-3 col-sm-4 col-xs-12" appearance="outline">
+                      <mat-select formControlName = "group" placeholder="{{'user.group' | translate}}" #groupSelect>
+                        <mat-option>
+                          <ngx-mat-select-search formControlName = "groupFilter" 
+                              placeholderLabel="Find group..." 
+                              noEntriesFoundLabel="'no matching group found'"
+                          ></ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let group of groups" [value]="group._id" (click)="enableLocationFilters(group)">
+                          {{group.roleName}}
+                        </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="mt-2 col-md-3 col-sm-4 col-xs-12" appearance="outline" *ngIf="showDistricts">
+                    <mat-label>{{'user.district' | translate}}</mat-label>
+                    <mat-select formControlName = "district" placeholder=" Select District" #districtSelect
+                      (selectionChange)="filterLocations($event, 2)">
+                      <mat-option>
+                        <ngx-mat-select-search formControlName = "districtFilter" 
+                            placeholderLabel="Find District..." 
+                            noEntriesFoundLabel="'no matching district found'"
+                        ></ngx-mat-select-search>
+                      </mat-option>
+                      <!-- <mat-option>None</mat-option> -->
+                      <mat-option *ngFor="let district of filteredDistricts | async" [value]="district._id">
+                        {{district.locationName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="mt-2 col-md-3 col-sm-4 col-xs-12" appearance="outline" *ngIf="showParliaments">
+                    <mat-label>{{'user.parliament' | translate}}</mat-label>
+                    <mat-select formControlName = "parliament" placeholder=" Select Parliament" #parliamentSelect
+                    (selectionChange)="filterLocations($event, 3)">
+                      <mat-option>
+                        <ngx-mat-select-search formControlName = "parliamentFilter" 
+                            placeholderLabel="Find Parliament..." 
+                            noEntriesFoundLabel="'no matching parliament found'"
+                        ></ngx-mat-select-search>
+                      </mat-option>
+                      <!-- <mat-option>None</mat-option> -->
+                      <mat-option *ngFor="let parliament of filteredParliaments | async" [value]="parliament._id">
+                        {{parliament.locationName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="mt-2 col-md-3 col-sm-4 col-xs-12" appearance="outline" *ngIf="showAssemblies">
+                    <mat-label>{{'user.assembly' | translate}}</mat-label>
+                    <mat-select formControlName = "assembly" placeholder=" Select Assembly" #assemblySelect
+                    (selectionChange)="filterLocations($event, 4)">
+                      <mat-option>
+                        <ngx-mat-select-search formControlName = "assemblyFilter" 
+                            placeholderLabel="Find Assembly..." 
+                            noEntriesFoundLabel="'no matching assembly found'"
+                        ></ngx-mat-select-search>
+                      </mat-option>
+                      <!-- <mat-option>None</mat-option> -->
+                      <mat-option *ngFor="let assembly of filteredAssemblies | async" [value]="assembly._id">
+                        {{assembly.locationName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="mt-2 col-md-3 col-sm-4 col-xs-12" appearance="outline" *ngIf="showMandals">
+                    <mat-label>{{'user.mandal' | translate}}</mat-label>
+                    <mat-select formControlName = "mandal" placeholder=" Select mandal" #mandalSelect
+                    (selectionChange)="filterLocations($event, 5)">
+                      <mat-option>
+                        <ngx-mat-select-search formControlName = "mandalFilter" 
+                            placeholderLabel="Find mandal..." 
+                            noEntriesFoundLabel="'no matching mandal found'"
+                        ></ngx-mat-select-search>
+                      </mat-option>
+                      <!-- <mat-option>None</mat-option> -->
+                      <mat-option *ngFor="let mandal of filteredMandals | async" [value]="mandal._id">
+                        {{mandal.locationName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="mt-2 col-md-3 col-sm-4 col-xs-12" appearance="outline" *ngIf="showSecretariats">
+                    <mat-label>{{'user.secretariat' | translate}}</mat-label>
+                    <mat-select formControlName = "secretariat" placeholder=" Select Secretariat" #secretariatSelect
+                        (selectionChange)="filterLocations($event, 6)">
+                      <mat-option>
+                        <ngx-mat-select-search formControlName = "secretariatFilter" 
+                            placeholderLabel="Find Secretariat..." 
+                            noEntriesFoundLabel="'no matching secretariat found'"
+                        ></ngx-mat-select-search>
+                      </mat-option>
+                      <!-- <mat-option>None</mat-option> -->
+                      <mat-option *ngFor="let secretariat of filteredSecretariats | async" [value]="secretariat._id">
+                        {{secretariat.locationName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="mt-2 col-md-3 col-sm-4 col-xs-12" appearance="outline" *ngIf="showGvTypes">
+                    <mat-label>{{'user.gvType' | translate}}</mat-label>
+                    <mat-select formControlName = "gvType" placeholder=" Select GvType" #gvTypeSelect
+                      (selectionChange)="filterLocations($event, 7)">
+                      <mat-option>
+                        <ngx-mat-select-search formControlName = "gvTypeFilter" 
+                            placeholderLabel="Find GvType..." 
+                            noEntriesFoundLabel="'no matching GvType found'"
+                        ></ngx-mat-select-search>
+                      </mat-option>
+                      <!-- <mat-option>None</mat-option> -->
+                      <mat-option *ngFor="let gvType of filteredGvTypes | async" [value]="gvType.value">
+                        {{gvType.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center w-100">
+                    <button type="button" mat-raised-button class="btn btn-success align-self-center col-md-5" 
+                            (click)="searchUsers()"
+                            [disabled]="!manageUsersForm.valid">{{'user.searchUsers' | translate}}
+                    </button>
+                </div>
+            </form>
+        </mat-card-content> 
+        <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-grid-pulse" 
+            [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>   
+         </mat-card>
+</div>
+
+<div class="d-flex justify-content-center rounded-lg align-items-center m-5 h-100">
+    <mat-card class="align-self-center w-100">
+        <mat-card-content>
+            <app-manage-users-table [searchObj]="searchObj"></app-manage-users-table>
+        </mat-card-content>
+      </mat-card>
+</div>

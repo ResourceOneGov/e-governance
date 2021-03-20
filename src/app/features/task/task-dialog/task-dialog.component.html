@@ -1,0 +1,209 @@
+<div class="d-flex justify-content-between">
+    <h1 mat-dialog-title class="ml-3 pl-2"> {{ isEditTask? 'Edit Task for ' + data.name : 'Create Task'}}</h1>
+    <button mat-icon-button [mat-dialog-close]="true">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<form [formGroup]="taskForm" class="p-2 d-flex flex-start flex-wrap">
+    <mat-form-field *ngIf="!isEditTask" class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+        <mat-label>{{'reports.district' | translate}}</mat-label>
+        <mat-select formControlName = "district" placeholder=" Select District" #districtSelect
+          (selectionChange)="filterLocations($event, 2)">
+          <mat-option>
+            <ngx-mat-select-search formControlName = "districtFilter" 
+                placeholderLabel="Find District..." 
+                noEntriesFoundLabel="'no matching district found'"
+            ></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let district of filteredDistricts | async" [value]="district._id">
+            {{district.locationName}}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!isEditTask" class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+    <mat-label>{{'reports.parliament' | translate}}</mat-label>
+    <mat-select formControlName = "parliament" placeholder=" Select Parliament" #parliamentSelect
+    (selectionChange)="filterLocations($event, 3)">
+        <mat-option>
+        <ngx-mat-select-search formControlName = "parliamentFilter" 
+            placeholderLabel="Find Parliament..." 
+            noEntriesFoundLabel="'no matching parliament found'"
+        ></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let parliament of filteredParliaments | async" [value]="parliament._id">
+        {{parliament.locationName}}
+        </mat-option>
+    </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!isEditTask" class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+    <mat-label>{{'reports.assembly' | translate}}</mat-label>
+    <mat-select formControlName = "assembly" placeholder=" Select Assembly" #assemblySelect
+    (selectionChange)="filterLocations($event, 4)">
+        <mat-option>
+        <ngx-mat-select-search formControlName = "assemblyFilter" 
+            placeholderLabel="Find Assembly..." 
+            noEntriesFoundLabel="'no matching assembly found'"
+        ></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let assembly of filteredAssemblies | async" [value]="assembly._id">
+        {{assembly.locationName}}
+        </mat-option>
+    </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!isEditTask" class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+    <mat-label>{{'reports.mandal' | translate}}</mat-label>
+    <mat-select formControlName = "mandal" placeholder=" Select mandal" #mandalSelect>
+        <mat-option>
+        <ngx-mat-select-search formControlName = "mandalFilter" 
+            placeholderLabel="Find mandal..." 
+            noEntriesFoundLabel="'no matching mandal found'"
+        ></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let mandal of filteredMandals | async" [value]="mandal._id">
+        {{mandal.locationName}}
+        </mat-option>
+    </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!isEditTask" class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+    <mat-label>{{'reports.secretariat' | translate}}</mat-label>
+    <mat-select formControlName = "secretariat" placeholder=" Select Secretariat" #secretariatSelect>
+        <mat-option>
+        <ngx-mat-select-search formControlName = "secretariatFilter" 
+            placeholderLabel="Find Secretariat..." 
+            noEntriesFoundLabel="'no matching secretariat found'"
+        ></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let secretariat of filteredSecretariats | async" [value]="secretariat.value">
+        {{secretariat.viewValue}}
+        </mat-option>
+    </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!isEditTask" class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+    <mat-label>{{'reports.gvType' | translate}}</mat-label>
+    <mat-select formControlName = "gvType" placeholder=" Select GvType" #gvTypeSelect>
+        <mat-option>
+        <ngx-mat-select-search formControlName = "gvTypeFilter" 
+            placeholderLabel="Find GvType..." 
+            noEntriesFoundLabel="'no matching GvType found'"
+        ></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let gvType of filteredGvTypes | async" [value]="gvType.value">
+        {{gvType.viewValue}}
+        </mat-option>
+    </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!isEditTask" class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+    <mat-label>{{'tasks.taskAssignedTo' | translate}}</mat-label>
+    <mat-select formControlName = "user" placeholder="Task Assigned to" [multiple]="true" #userSelect>
+        <mat-option>
+        <ngx-mat-select-search formControlName = "userFilter"
+        [showToggleAllCheckbox]="true" (toggleAll)="toggleSelectAll($event)" 
+        [toggleAllCheckboxTooltipMessage]="tooltipMessage"
+        [toogleAllCheckboxTooltipPosition]="'above'"
+            placeholderLabel="Find User..." 
+            noEntriesFoundLabel="'no matching user found'"
+        ></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let user of filteredUsers | async" [value]="user._id">
+        {{user.userId}}
+        </mat-option>
+    </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+    <mat-label>{{'tasks.category' | translate}}</mat-label>
+    <mat-select formControlName = "category" placeholder=" Select category" #categorySelect>
+        <mat-option>
+        <ngx-mat-select-search formControlName = "categoryFilter" 
+            placeholderLabel="Find category..." 
+            noEntriesFoundLabel="'no matching category found'"
+        ></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let category of filteredCategories | async" [value]="category._id">
+        {{category.name}}
+        </mat-option>
+    </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+    <mat-label>{{'tasks.priority' | translate}}</mat-label>
+    <mat-select formControlName = "priority" placeholder=" Select priority" #prioritySelect>
+        <mat-option>
+        <ngx-mat-select-search formControlName = "priorityFilter" 
+            placeholderLabel="Find priority..." 
+            noEntriesFoundLabel="'no matching priority found'"
+        ></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let priority of filteredPriorities | async" [value]="priority.value">
+        {{priority.viewValue}}
+        </mat-option>
+    </mat-select>
+    </mat-form-field>
+
+    <div class="d-flex justify-content-around w-100">
+        <div class="p-3 col-md-12">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>{{'tasks.taskName' | translate}}</mat-label>
+                <input matInput placeholder="Task Name" formControlName="name" required>
+            </mat-form-field>
+            <p *ngIf="f.name.touched && f.name.invalid && f.name.errors.cannotStartWithSpace" class="text-danger">
+                Name cannot start with white spaces.
+            </p>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-around w-100">
+        <div class="p-3 col-md-12">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>{{'tasks.description' | translate}}</mat-label>
+                <textarea matInput placeholder="Task Description" formControlName="description" required></textarea>
+            </mat-form-field>
+            <p *ngIf="f.description.touched && f.description.invalid && f.description.errors.cannotStartWithSpace" class="text-danger">
+                Description cannot start with white spaces.
+            </p>
+        </div>
+    </div>
+    <div class="d-flex justify-content-around w-100">
+        <div class="p-3 col-md-12  file-uploaddiv">
+            <mat-form-field  class="w-100" appearance="outline" 
+                [ngStyle]="{ 'display' : isEditTask == true ? 'none' : 'block'}">
+                <mat-label>{{'tasks.fileUpload' | translate}}</mat-label>
+                <ngx-mat-file-input #fileUploader formControlName="file" placeholder="file upload" 
+                  [accept]="'image/*,.pdf,.csv'" multiple>
+                </ngx-mat-file-input>
+                <button mat-icon-button matSuffix *ngIf="!fileUploader.empty" (click)="fileUploader.clear($event)">
+                    <mat-icon>clear</mat-icon>
+                </button>
+                <mat-icon matSuffix>attachment</mat-icon>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <!-- <div class="d-flex justify-content-around w-100" *ngIf="isEditTask">
+        <div *ngFor="let selected of data.files;let index = index">
+            <h3>{{selected}}</h3>
+            <button mat-icon-button (click)="removeSelectedFile(index)">delete</button>
+        </div>
+    </div> -->
+    
+    <div class="d-flex justify-content-center align-items-center w-100">
+        <button type="button" mat-raised-button class="btn btn-success align-self-center col-md-5" 
+                (click)="uploadFile()"
+                [disabled]="isEditTask ? !(taskForm.valid && taskForm.dirty) :(!taskForm.valid || fileUploader.empty)">{{'tasks.submitTask' | translate}}
+        </button>
+    </div>
+</form>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-grid-pulse" 
+            [fullScreen] = "true">
+            <p *ngIf="progress > 0 && progress < 100" style="color: white" >{{ progressMessage }} </p>
+            <p *ngIf="progress == 0" style="color: white" > Uploading ... </p>
+            <p *ngIf="progress == 100" style="color: white" > Progressing ... </p>
+</ngx-spinner>  

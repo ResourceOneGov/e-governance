@@ -1,0 +1,162 @@
+<div class="eLearning-container d-flex justify-content-center align-items-center m-5 h-100">
+    <mat-card class="w-100">        
+        <!-- <div *ngIf="error" class="alert alert-danger">{{error}}</div> -->
+        <mat-card-header class="justify-content-between  m-2 border-bottom border-secondary">
+            <mat-card-title>{{'eLearning.uploadVideo' | translate}}</mat-card-title>
+            <mat-icon matTooltip="Upload the Video for E-Learning">info</mat-icon>
+        </mat-card-header>
+
+        <mat-card-content class="m-2">
+            <div class="py-3 px-1 d-flex justify-content-end w-100">
+                <button mat-stroked-button class="col-md-3 col-sm-6 text-success" 
+                  (click)="uploadVideo()">{{'eLearning.uploadVideo' | translate}}</button> 
+              </div>
+            <!-- <form [formGroup]="uploadVideoForm">
+                <div class="d-flex justify-content-around flex-wrap w-100">
+                    <div class="p-2 col-md-6 col-xs-12">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'eLearning.title' | translate}}</mat-label>
+                            <input matInput placeholder="Title of Video" formControlName="name" required>
+                        </mat-form-field>
+                        <p *ngIf="f.name.touched && f.name.invalid && f.name.errors.cannotStartWithSpace" class="text-danger">
+                            Title cannot start with white spaces.
+                        </p>
+                    </div>
+                    <div class="p-2 col-md-6 col-xs-12">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'eLearning.selectCategory' | translate}}</mat-label>
+                            <mat-select formControlName="category" placeholder="Select a Category" required>
+                                <mat-option *ngFor="let category of categories" [value]="category._id">
+                                {{ category.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-around w-100">
+                    <div class="p-2 col-md-12">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'eLearning.description' | translate}}</mat-label>
+                            <textarea matInput placeholder="Description" formControlName="description" 
+                             (keydown.enter)="$event.preventDefault()" (keyup.enter)="$event.preventDefault()" 
+                             (keydown.shift.Enter)="$event.preventDefault()" required></textarea>
+                        </mat-form-field>
+                        <p *ngIf="f.description.touched && f.description.invalid && f.description.errors.cannotStartWithSpace" class="text-danger">
+                            Description cannot start with white spaces.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-around w-100">
+                    <div class="p-2 col-md-12 file-uploaddiv">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'eLearning.uploadVideoContent' | translate}} (Mp4 file only)</mat-label>
+                            <ngx-mat-file-input [disabled]="isFileUploading" #videoUploader formControlName="video" 
+                                        placeholder="Mp4 file only" [accept]="'.mp4'">
+                            </ngx-mat-file-input>
+                            <button class="clear" mat-icon-button matSuffix *ngIf="!videoUploader.empty" (click)="videoUploader.clear($event)">
+                                <mat-icon *ngIf="!isFileUploading">clear</mat-icon>
+                            </button>
+                            <mat-icon class="attachment" *ngIf="!isFileUploading" matSuffix>attachment</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div *ngIf="isFileUploading">
+                    <div class="d-flex justify-content-between w-100 m-2" *ngIf="progress > 0">
+                        <div>{{ progress }}% of 100%</div>
+                        <mat-icon class="mx-3" (click)="cancelUpload()">cancel</mat-icon>
+                    </div>
+    
+                    <div class="d-flex m-2 justify-content-between progress" *ngIf="progress > 0">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="d-flex justify-content-center align-items-center w-100">
+                    <button  type="button" mat-raised-button class="btn btn-success align-self-center col-md-5"
+                             (click)="onUploadVideo()"
+                            [disabled]="!uploadVideoForm.valid || videoUploader.empty || isFileUploading">{{'eLearning.uploadVideo' | translate}}
+                    </button>
+                </div>
+                <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-grid-pulse" 
+                    [fullScreen] = "true">
+                    <p *ngIf="progress > 0 && progress < 100" style="color: white" >{{ progressMessage }} </p>
+                    <p *ngIf="progress == 0" style="color: white" > Uploading ... </p>
+                    <p *ngIf="progress == 100" style="color: white" > Progressing ... </p>
+                </ngx-spinner>  
+            </form> -->
+        
+            <!-- <mat-form-field class="w-100">
+            <mat-label>{{'tasks.searchTasks' | translate}}</mat-label>
+            <input matInput [(ngModel)]="search" #taskInput>
+          </mat-form-field> -->
+          
+          <table mat-table [dataSource]="videosDataSource" class="mat-elevation-z8 w-100">
+            
+            <ng-container matColumnDef="No">
+              <th mat-header-cell *matHeaderCellDef> {{'eLearning.number' | translate}} </th>
+              <td mat-cell *matCellDef="let element; let i= index"> {{offset + i + 1}} </td>
+            </ng-container>
+            <!-- Position Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> {{ 'eLearning.name' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+          
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="uploadedOn">
+              <th mat-header-cell *matHeaderCellDef> {{ 'eLearning.uploadedOn' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{convertDate(element.uploadDate)}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef> {{'eLearning.category' | translate}} </th>
+                <td mat-cell *matCellDef="let element"> {{element.category.name}} </td>
+              </ng-container>
+          
+            <ng-container matColumnDef="likes">
+                <th mat-header-cell *matHeaderCellDef> {{'eLearning.likes' | translate}} </th>
+                <td mat-cell *matCellDef="let element"> {{element.likes}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="views">
+                <th mat-header-cell *matHeaderCellDef> {{'eLearning.views' | translate}} </th>
+                <td mat-cell *matCellDef="let element"> {{element.views}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="questions">
+                <th mat-header-cell *matHeaderCellDef> {{'eLearning.questionLength' | translate}} </th>
+                <td mat-cell *matCellDef="let element"> {{element.questionnaire.length}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> {{'eLearning.action' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> 
+                <button mat-icon-button (click)="editVideo(element)">
+                  <mat-icon color="primary">edit</mat-icon>
+                </button>
+            
+                <button mat-icon-button (click)="deleteVideo(element)">
+                  <mat-icon color="warn">delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          
+            <!-- Row shown when there is no matching data. -->
+            <!-- <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr> -->
+          </table>
+          <mat-paginator [pageSize]="limit" [length]="tasksLength"
+                [pageSizeOptions]="[5, 10, 20]" (page)="onPaginateChange($event)">
+          </mat-paginator>
+        </mat-card-content>   
+    </mat-card>
+</div>

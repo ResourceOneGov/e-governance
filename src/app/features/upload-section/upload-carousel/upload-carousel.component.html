@@ -1,0 +1,27 @@
+<div class="progress my-3" *ngIf="progress">
+	<div class="progress-bar" [style.width]="progress + '%'">{{progress}}%</div>
+</div>
+
+<div class="col-md-12 d-flex my-3 justify-content-around">
+    <div class="position-relative" *ngFor="let n of [0,1,2,3,4]">
+        <label class="hoverable mx-2 my-2 p-0" for="fileInput{{n}}"
+        [ngClass]="urls[n] ? 'withborder' : 'withoutborder'">
+            <img [src]="urls[n] ? urls[n] :'../../../assets/img/plus.png'"
+             [ngClass]="urls[n] ? 'imageAfterUpload' : 'imageBeforeUpload'"> 
+            <div class="hover-text">{{urls[n] ? 'Change' : 'Add'}} Carousel</div>
+            <div class="background"></div>
+        </label>
+        <input id="fileInput{{n}}" class="uploadfile-button" type='file' accept="image/*" 
+                (change)="onSelectFile($event, n)">
+        <button *ngIf="urls[n]" mat-icon-button (click)="delete(n)" class="position-absolute delete-button"> 
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center align-items-center w-100">
+    <button mat-raised-button class="btn btn-success" (click)="uploadCarousels()" 
+        [disabled]="disableCarouselBtn()">{{'uploadSection.uploadCarousel' | translate}}
+    </button>
+</div>
+

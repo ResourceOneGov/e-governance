@@ -1,0 +1,147 @@
+<div *ngIf="error" class="alert alert-danger mt-3 mx-3">{{error}}</div>
+<div *ngIf="errors?.length > 0" class="alert alert-danger mt-3 mx-3">
+  <div *ngFor="let error of errors">
+    {{error.row}}  -  {{error.message}}
+  </div>
+</div>
+<form [formGroup]="userCreationForm" class="mt-2 uploadUser-container">  
+    <div class="d-flex flex-start flex-wrap">
+        <mat-form-field class="mt-2 col-md-3 col-sm-4 col-xs-12" appearance="outline">
+            <mat-select formControlName = "group" placeholder="{{'uploadSection.group' | translate}}" #groupSelect>
+              <mat-option>
+                <ngx-mat-select-search formControlName = "groupFilter" 
+                    placeholderLabel="Find group..." 
+                    noEntriesFoundLabel="'no matching group found'"
+                ></ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let group of groups" [value]="group._id" (click)="enableLocationFilters(group)">
+                {{group.roleName}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="mt-2 col-md-3 col-sm-4 col-xs-12" appearance="outline" *ngIf="showDistricts">
+          <mat-label>{{'uploadSection.district' | translate}}</mat-label>
+          <mat-select formControlName = "district" placeholder=" Select District" #districtSelect
+            (selectionChange)="filterLocations($event, 2)">
+            <mat-option>
+              <ngx-mat-select-search formControlName = "districtFilter" 
+                  placeholderLabel="Find District..." 
+                  noEntriesFoundLabel="'no matching district found'"
+              ></ngx-mat-select-search>
+            </mat-option>
+            <!-- <mat-option>None</mat-option> -->
+            <mat-option *ngFor="let district of filteredDistricts | async" [value]="district._id">
+              {{district.locationName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="mt-2 col-md-3 col-sm-4 col-xs-12" appearance="outline" *ngIf="showParliaments">
+          <mat-label>{{'uploadSection.parliament' | translate}}</mat-label>
+          <mat-select formControlName = "parliament" placeholder=" Select Parliament" #parliamentSelect
+          (selectionChange)="filterLocations($event, 3)">
+            <mat-option>
+              <ngx-mat-select-search formControlName = "parliamentFilter" 
+                  placeholderLabel="Find Parliament..." 
+                  noEntriesFoundLabel="'no matching parliament found'"
+              ></ngx-mat-select-search>
+            </mat-option>
+            <!-- <mat-option>None</mat-option> -->
+            <mat-option *ngFor="let parliament of filteredParliaments | async" [value]="parliament._id">
+              {{parliament.locationName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="mt-2 col-md-3 col-sm-4 col-xs-12" appearance="outline" *ngIf="showAssemblies">
+          <mat-label>{{'uploadSection.assembly' | translate}}</mat-label>
+          <mat-select formControlName = "assembly" placeholder=" Select Assembly" #assemblySelect
+          (selectionChange)="filterLocations($event, 4)">
+            <mat-option>
+              <ngx-mat-select-search formControlName = "assemblyFilter" 
+                  placeholderLabel="Find Assembly..." 
+                  noEntriesFoundLabel="'no matching assembly found'"
+              ></ngx-mat-select-search>
+            </mat-option>
+            <!-- <mat-option>None</mat-option> -->
+            <mat-option *ngFor="let assembly of filteredAssemblies | async" [value]="assembly._id">
+              {{assembly.locationName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="mt-2 col-md-3 col-sm-4 col-xs-12" appearance="outline" *ngIf="showMandals">
+          <mat-label>{{'uploadSection.mandal' | translate}}</mat-label>
+          <mat-select formControlName = "mandal" placeholder=" Select mandal" #mandalSelect
+          (selectionChange)="filterLocations($event, 5)">
+            <mat-option>
+              <ngx-mat-select-search formControlName = "mandalFilter" 
+                  placeholderLabel="Find mandal..." 
+                  noEntriesFoundLabel="'no matching mandal found'"
+              ></ngx-mat-select-search>
+            </mat-option>
+            <!-- <mat-option>None</mat-option> -->
+            <mat-option *ngFor="let mandal of filteredMandals | async" [value]="mandal._id">
+              {{mandal.locationName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="mt-2 col-md-3 col-sm-4 col-xs-12" appearance="outline" *ngIf="showSecretariats">
+          <mat-label>{{'uploadSection.secretariat' | translate}}</mat-label>
+          <mat-select formControlName = "secretariat" placeholder=" Select Secretariat" #secretariatSelect
+              (selectionChange)="filterLocations($event, 6)">
+            <mat-option>
+              <ngx-mat-select-search formControlName = "secretariatFilter" 
+                  placeholderLabel="Find Secretariat..." 
+                  noEntriesFoundLabel="'no matching secretariat found'"
+              ></ngx-mat-select-search>
+            </mat-option>
+            <!-- <mat-option>None</mat-option> -->
+            <mat-option *ngFor="let secretariat of filteredSecretariats | async" [value]="secretariat._id">
+              {{secretariat.locationName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="mt-2 col-md-3 col-sm-4 col-xs-12" appearance="outline" *ngIf="showGvTypes">
+          <mat-label>{{'uploadSection.gvType' | translate}}</mat-label>
+          <mat-select formControlName = "gvType" placeholder=" Select GvType" #gvTypeSelect
+            (selectionChange)="filterLocations($event, 7)">
+            <mat-option>
+              <ngx-mat-select-search formControlName = "gvTypeFilter" 
+                  placeholderLabel="Find GvType..." 
+                  noEntriesFoundLabel="'no matching GvType found'"
+              ></ngx-mat-select-search>
+            </mat-option>
+            <!-- <mat-option>None</mat-option> -->
+            <mat-option *ngFor="let gvType of filteredGvTypes | async" [value]="gvType.value">
+              {{gvType.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="d-flex justify-content-around w-100">
+        <div class="col-md-12 file-uploaddiv">
+            <mat-form-field  class="w-100" appearance="outline">
+                <mat-label>{{'uploadSection.fileUpload' | translate}}</mat-label>
+                <ngx-mat-file-input #userFileUploader formControlName="file" placeholder="CSV file only" [accept]="'.csv'">
+                </ngx-mat-file-input>
+                <button mat-icon-button matSuffix *ngIf="!userFileUploader.empty" (click)="userFileUploader.clear($event)">
+                    <mat-icon>clear</mat-icon>
+                </button>
+                <mat-icon matSuffix>attachment</mat-icon>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center w-100">
+        <button mat-raised-button class="btn btn-success" (click)="parseCSV()"
+                [disabled]="userFileUploader.empty || !userCreationForm.valid">{{'uploadSection.uploadUsersList' | translate}}
+        </button>
+    </div>
+    <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-grid-pulse" 
+    [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>  
+</form>

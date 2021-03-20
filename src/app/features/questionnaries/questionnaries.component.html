@@ -1,0 +1,183 @@
+<div class="d-flex justify-content-center align-items-center m-5 h-100">
+    <mat-card class="w-100">
+        <mat-card-header class="justify-content-between  m-4 border-bottom border-secondary">
+            <mat-card-title>{{'questionnaires.questionnaires' | translate}}</mat-card-title>
+            <mat-icon>info</mat-icon>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="questionnarie" class="mb-2">
+                <div class="d-flex m-3 justify-content-between flex-wrap">
+                    <div class="p-2 col-md-5">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{ 'questionnaires.selectCategory' | translate}}</mat-label>
+                            <mat-select formControlName="category" placeholder="Select a Category" 
+                                [disabled]="disableVideoSelection" (selectionChange)="getVideos()" (keyup)="search()">
+                                <mat-option *ngFor="let category of categories" [value]="category._id">
+                                {{ category.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="px-2 pt-2 col-md-7">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>{{'questionnaires.selectVideo' | translate}}</mat-label>
+                            <mat-select formControlName = "video" placeholder=" Select Video" #videoSelect 
+                                        [disabled]="disableVideoSelection">
+                              <mat-option>
+                                <ngx-mat-select-search formControlName = "videoFilter" 
+                                    placeholderLabel="Find Video..." 
+                                    noEntriesFoundLabel="'no matching video found'"
+                                ></ngx-mat-select-search>
+                              </mat-option>
+                              <mat-option *ngFor="let video of filteredVideos |async" [value]="video._id" 
+                                [matTooltip]="video.status === 'EV001' ? 'Video is processing' : 
+                                    video.status === 'EV002' ? 'Video Upload Failed. Upload Again' : ''"
+                                [disabled]="video.status === 'EV001' || video.status === 'EV002'">
+                                {{ video.name }}
+                                <!-- <i class="fa fa-check-circle text-success" *ngIf="video.status === 'EV003'"></i>  -->
+                                <i class="text-danger fa fa-exclamation-circle" *ngIf="video.status === 'EV002'"></i>
+                                <i class="text-warning fa fa-spinner fa-pulse fa-fw" *ngIf="video.status === 'EV001'"></i>
+                                <!-- <mat-icon  color="">timelapse</mat-icon> -->
+                            </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="d-flex px-2 justify-content-end">
+                    <div class="col-md-3 w-100 align-content-stretch align-self-center">
+                        <button mat-raised-button class="w-100 btn-block btn-primary" type="button" 
+                        [disabled]="!questionnarie.get('video').value || showQuestion"
+                            (click)="showQuestionOptions($event)">
+                            <i class="fa fa-plus"></i>
+                            {{'questionnaires.addQuestion' | translate}}
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="d-flex m-3 justify-content-around" *ngIf="showQuestion">
+                    <div class="p-2 col-md-12">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'questionnaires.enterQuestion' | translate}}</mat-label>
+                            <textarea matInput placeholder="Enter Question" formControlName="question"></textarea>
+                        </mat-form-field>
+                        <p *ngIf="f.question.touched && f.question.invalid && f.question.errors.cannotStartWithSpace" class="text-danger">
+                            Question cannot start with white spaces.
+                        </p>
+                    </div>
+                    <!-- <div class="p-2 col-md-3 d-flex flex-column">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Number Of Options</mat-label>
+                            <mat-select formControlName="optionsCount" name="optionsCount">
+                              <mat-option *ngFor="let option of options" [value]="option">
+                                {{option}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+                </div>
+
+                <div class="d-flex m-3 justify-content-around" *ngIf="showQuestion">
+                    <div class="p-2 col-md-9">
+                        
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'questionnaires.enterOption' | translate}}</mat-label>
+                            <input matInput placeholder="Enter Option"value="" formControlName="newOption" type="text">
+                          </mat-form-field>
+                          <p *ngIf="f.newOption.touched && f.newOption.invalid && f.newOption.errors.cannotStartWithSpace" class="text-danger">
+                            Option cannot start with white spaces.
+                          </p>
+                    </div>
+                    <div class="col-md-3 w-100 align-content-stretch align-self-center">
+                        <button mat-raised-button class="w-100 btn-primary" type="button" [disabled]="!questionnarie.get('newOption').value"
+                        (click)="addOptions($event)"> {{'questionnaires.addOption' | translate}}</button>
+                    </div>
+                </div>
+
+                <!-- <mat-list class="col-12 m-2">
+                    <mat-toolbar *ngFor="let option of options; let i = index;" class="col-12 m-3">
+                        <div class="p-1 col-10 w-100">{{option}}</div>
+                        <div class="col-2 w-100 align-content-stretch align-self-center">
+                            <button type="button" mat-icon-button color="warn" (click)="deleteOption(i)">
+                                <mat-icon>delete</mat-icon>
+                                </button>
+                        </div>                        
+                    </mat-toolbar>
+                </mat-list>  -->
+
+                <div *ngFor="let option of options; let i = index;" class="mx-4 my-2 d-flex justify-content-around">
+                    <div class="p-1 col-9 w-100">{{option}}</div>
+                    <div class="col-3 w-100 align-content-stretch align-self-center">
+                        <button type="button" mat-icon-button color="warn" (click)="deleteOption(i)">
+                            <mat-icon>delete</mat-icon>
+                            </button>
+                    </div>                        
+                </div>  
+                
+                <div class="mx-4 p-1 d-flex flex-start" *ngIf="options.length > 0">
+                    <label>{{'questionnaires.pickYourAnswer' | translate}}:</label>
+                    <mat-radio-group name="optionsList" class="d-flex flex-row ml-2 flex-wrap" formControlName="answer" required>
+                        <mat-radio-button class="mr-2 ml-1" *ngFor="let op of options; let idx = index" [value]="idx">
+                            {{op}}</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="button" (click)="onSaveQuestion($event)" [disabled]="disableSaveBtn()" mat-raised-button 
+                        class="primary mb-2 col-5 btn btn-success">{{'questionnaires.save' | translate}}</button>
+                </div>
+            </form>
+              
+        </mat-card-content> 
+
+        <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-grid-pulse" 
+            [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>  
+
+    </mat-card>
+</div>
+
+<div class="d-flex justify-content-center align-items-center m-5 h-100">
+    <table mat-table [dataSource]="questionsDataSource" class="mat-elevation-z8 w-100 mt-2" 
+    *ngIf="questionsDataSource.length > 0">
+
+        <ng-container matColumnDef="question">
+            <th mat-header-cell *matHeaderCellDef> Question </th>
+            <td mat-cell *matCellDef="let element"> {{element.question}} </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="options">
+            <th mat-header-cell *matHeaderCellDef> Options </th>
+            <td mat-cell *matCellDef="let element"> 
+                <span *ngFor="let option of options; let last = last;">
+                    {{option}}<span *ngIf="!last"></span>
+                </span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="answer">
+            <th mat-header-cell *matHeaderCellDef> Answer </th>
+            <td mat-cell *matCellDef="let element"> {{element.answer}} </td>
+        </ng-container> -->
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element; let i = index;"> 
+                <button type="button" mat-icon-button color="warn" color="warn" (click)="delteQuestion(i)">
+                    <mat-icon>delete</mat-icon>
+                </button> 
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="disclaimer" class="w-100">
+            <td mat-footer-cell *matFooterCellDef class="d-flex justify-content-between p-2 w-100">
+                <!-- <button mat-raised-button [disabled]="questionsDataSource.length === 0" 
+                    (click)="cancelQuestionnarie()">Cancel</button> -->
+                <button mat-raised-button class="" [disabled]="questionsDataSource.length === 0" 
+                    (click)="updateQuestionnarie()">Submit</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="['disclaimer']" class="example-second-footer-row"></tr>
+    </table>
+</div>

@@ -1,0 +1,224 @@
+<ng-container *ngIf="role !== 10">
+    <div class="dashboardmain-container">
+        <h5 class="main-heding ml-4">{{ 'dashboard.issueAtLevelWise' | translate }}</h5>
+        <div class="example-container mat-elevation-z8 m-3">
+            <table mat-table [dataSource]="dataSource" class="w-100">
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="stakeholders" sticky>
+                <th mat-header-cell *matHeaderCellDef> Stakeholders </th>
+                <td mat-cell *matCellDef="let element" ><a *ngIf= "element.level != 'Total'" (click) = "getIssueTracker(element)" [routerLink]>{{element.level}}</a>
+            <span *ngIf = "element.level === 'Total'">Total</span> </td>
+                </ng-container>
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="green">
+                <th mat-header-cell *matHeaderCellDef> Green </th>
+                <td mat-cell *matCellDef="let element"> {{element.green ? element.green : 0}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="blue">
+                <th mat-header-cell *matHeaderCellDef> Blue </th>
+                <td mat-cell *matCellDef="let element"> {{element.blue ? element.blue : 0}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="orange">
+                <th mat-header-cell *matHeaderCellDef> Orange </th>
+                <td mat-cell *matCellDef="let element"> {{element.orange ? element.orange : 0}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="yellow">
+                <th mat-header-cell *matHeaderCellDef> Yellow </th>
+                <td mat-cell *matCellDef="let element"> {{element.yellow ? element.yellow : 0}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="red">
+                <th mat-header-cell *matHeaderCellDef> Red </th>
+                <td mat-cell *matCellDef="let element"> {{element.red ? element.red : 0}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="black">
+                <th mat-header-cell *matHeaderCellDef> Black </th>
+                <td mat-cell *matCellDef="let element"> {{element.black ? element.black : 0}} </td>
+                </ng-container>
+
+                <!-- Star Column -->
+                <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef> Total </th>
+                <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                    [ngStyle]="{color: row}"></tr>
+            </table>
+        </div>
+  <div *ngIf = "roleName !== 'JC'">
+        <div class="d-flex justify-content-between flex-wrap mainchart-div">
+            <div class="chartdiv p-1">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-column">
+                        <p class="ml-3">VOLUNTEER</p>
+                        <p class="ml-3 voulteer-number">{{volunteerCount}}</p>
+                    </div>
+                    <div class="d-flex flex-end space-evenly" *ngIf="volunteerCount !==0">
+                        <mat-form-field appearance="fill" class="w-75">
+                            <mat-label>Chart Type</mat-label>
+                            <select matNativeControl [(ngModel)]="selectedCitizenChart" (selectionChange)="selectChartType($event, 'volunteer')">
+                              <option *ngFor="let option of chartTypes" [value]="option.value"
+                                      [selected]="selectedVolunteerChart === option.value">{{ option.viewValue }}</option>
+                            </select>
+                          </mat-form-field>
+                    </div>
+                </div>
+                <div *ngIf="volunteerCount !==0">
+                    <app-column-chart  [chartOptions]="volunteerBarChartOptions" *ngIf="selectedVolunteerChart === 'bar'"></app-column-chart>
+                    <app-pie-chart [chartOptions]="volunteerChartOptions" *ngIf="selectedVolunteerChart === 'pie'"></app-pie-chart>
+                </div>
+                <div class="pie-chart" *ngIf="volunteerCount === 0">
+                    <div class="greycolor"></div>
+                </div>
+            </div>
+            <!--second chart-->
+            <div class="chartdiv p-1">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-column">
+                        <p class="ml-3">CITIZEN</p>
+                        <p class="ml-3 voulteer-number"> {{citizenCount}}</p>
+                    </div>
+                    <div class="d-flex flex-end space-evenly" *ngIf="citizenCount !==0">
+                        <mat-form-field appearance="fill" class="w-75">
+                            <mat-label>Chart Type</mat-label>
+                            <select matNativeControl [(ngModel)]="selectedCitizenChart" (selectionChange)="selectChartType($event, 'citizen')">
+                                <option *ngFor="let option of chartTypes" [value]="option.value">{{ option.viewValue }}</option>
+                            </select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <app-pie-chart *ngIf="citizenCount !==0 && selectedCitizenChart === 'pie'" [chartOptions]="citizenChartOptions"></app-pie-chart>
+                <app-column-chart *ngIf="citizenCount !==0 && selectedCitizenChart === 'bar'" [chartOptions]="citizenBarChartOptions"></app-column-chart>
+                <div class="pie-chart" *ngIf="citizenCount === 0">
+                    <div class="greycolor"></div>
+                </div>
+            </div>
+            <!--third chart-->
+            <div class="chartdiv p-1">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-column">
+                        <p class="ml-3">WS / VS</p>
+                        <p class="ml-3 voulteer-number">{{gswsCount}}</p>
+                    </div>
+                    <div class="d-flex flex-end space-evenly" *ngIf="gswsCount !==0">
+                        <mat-form-field appearance="fill" class="w-75">
+                            <mat-label>Chart Type</mat-label>
+                            <select matNativeControl [(ngModel)]="selectedWSVSChart" (selectionChange)="selectChartType($event, 'gsws')">
+                                <option *ngFor="let option of chartTypes" [value]="option.value">{{ option.viewValue }}</option>
+                            </select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="pie-chart" *ngIf="gswsCount !== 0">
+                    <app-pie-chart [chartOptions]="gswsChartOptions" *ngIf="selectedWSVSChart === 'pie'"></app-pie-chart>
+                    <app-column-chart [chartOptions]="gswsBarChartOptions" *ngIf="selectedWSVSChart === 'bar'"></app-column-chart>
+                </div>
+                <div class="pie-chart" *ngIf="gswsCount === 0">
+                    <div class="greycolor"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <h5 class="main-heding ml-4">Volunteer Training</h5>
+        <app-volunteer-training (sendVideo)="getUsersReports($event)"></app-volunteer-training>
+
+
+        <h5 class="main-heding ml-4">Volunteers Training Attendance</h5>
+        <!-- <app-user-reports></app-user-reports> -->
+        <div class="issue-level-wise2 ml-4 mr-5 table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="greenshade"></th>
+                        <th class="grayshade">Attendence</th>
+                        <th class="grayshade">Assessment</th>
+                        <th class="grayshade">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <th class="greenshade">URBAN</th>
+                        <td>{{totalPresentUsersUrban?.count || 0}}</td>
+                          <td>{{totalUsersWithGoodAssessmentUrban?.count || 0}}</td>
+                          <td>{{totalPresentUsersUrban?.count + totalUsersWithGoodAssessmentUrban?.count || 0}}</td>
+                    </tr>
+                    <tr>
+                      <th class="greenshade">RURAL</th>
+                        <td>{{ totalPresentUsersRural?.count || 0 }}</td>
+                          <td>{{ totalUsersWithGoodAssessmentRural?.count || 0}}</td>
+                          <td>{{ totalPresentUsersRural?.count + totalUsersWithGoodAssessmentRural?.count || 0}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
+      </div>
+    <div class="attendence mt-5 mb-5" *ngIf = "roleName !== 'JC'">
+        <h5 class="main-heding ml-4">FOA Attendence</h5>
+            <!-- Admin -->
+            <div class="d-flex border justify-content-between mx-3 mt-4 p-4" *ngIf="role === 5">
+                <div class="col-sm-3">
+                    <h5 class="text-center">SLO</h5>
+                    <div class="border p-2 shadow">
+                        <p class="text-center attendence-tag">5/5</p>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <h5 class="text-center">DLO</h5>
+                    <div class="border p-2 shadow">
+                        <p class="text-center attendence-tag">50/50</p>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <h5 class="text-center">MLO</h5>
+                    <div class="border p-2 shadow">
+                        <p class="text-center attendence-tag">980/1006</p>
+                    </div>
+                </div>
+            </div>
+            <!-- SLO -->
+            <div class="d-flex border justify-content-center mx-3 mt-4 p-4" *ngIf="role === 4">
+                <div class="col-sm-3">
+                    <h5 class="text-center">DLO</h5>
+                    <div class="border p-2 shadow">
+                        <p class="text-center attendence-tag">50/50</p>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <h5 class="text-center">MLO</h5>
+                    <div class="border p-2 shadow">
+                        <p class="text-center attendence-tag">980/10006</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DLO -->
+            <div class="d-flex border justify-content-center mx-3 mt-4 p-4" *ngIf="role === 3">
+                <div class="col-sm-3">
+                    <h5 class="text-center">MLO</h5>
+                    <div class="border p-2 shadow">
+                        <p class="text-center attendence-tag">980/10006</p>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+</ng-container>
+
+<ng-container *ngIf="role ===10">
+    <app-special-dashboard></app-special-dashboard>
+</ng-container>
+
+
+

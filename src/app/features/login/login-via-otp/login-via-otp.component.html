@@ -1,0 +1,82 @@
+<div class="overflow-hidden">
+    <div class="d-flex row mh-100">
+      <div class="col-md-6 flex-fill bg d-none-img jagan-pic">
+        <div class="image-text">
+             <p class="bg-light name-text p-3 text-center font-weight-bold">
+             Y. S. JAGANMOHAN REDDY</p>
+             <p class="text-center">Hon'ble Cheif Minister of Andhra Pradesh</p>
+         </div>
+       <img src="../../../assets/img/CM_login/CM 1.png" width="100%" height="100%" />
+     </div>
+      <div class="col-md-6 flex-fill  mh-100 t-space">
+        <div class="colorbar top--colorbar"></div>
+        <div class="logo d-flex justify-content-center mt-5">
+          <div class="logo-outer">
+            <div class="logo-wrap">
+              <img width="128" src="../../../assets/img/logo/logo.png" alt="logo" title="logo">
+            </div>
+          </div>
+        </div>
+        <mat-card class="w-75 pb-3 pt-5 px-5">
+  
+            <mat-card-header class="text-center d-flex justify-content-center">
+                <mat-card-title>Login Via OTP</mat-card-title>
+                <mat-card-subtitle>Enter your mobile number and we will send you 6 Digits of OTP number to your mobile number.</mat-card-subtitle>
+            </mat-card-header>
+            
+            <div class="w-100 m-2 alert alert-success" *ngIf="message">{{message}}</div>
+
+            <div class="w-100 m-2 alert alert-success" *ngIf="error">{{error}}</div>
+
+  
+          <mat-card-content class="d-flex justify-content-center flex-column">
+            <form class="row flex-column justify-content-center" [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+  
+              <mat-form-field appearance="outline">
+                <mat-label>Enter Mobile Number</mat-label>
+  
+                <input matInput placeholder="Enter Mobile Number" formControlName="mobileNumber" required>
+  
+              </mat-form-field>
+  
+  
+              <button type="submit" mat-raised-button color="accent" class="btn-block btn-green btn-blue-theme"
+                [disabled]="!otpForm.valid">Continue</button>
+            </form>
+          </mat-card-content>
+          <div class="d-flex row flex-row justify-content-center align-items-stretch">
+            <button mat-button color="primary" [routerLink]="['/login']">Back to Login</button>
+          </div>
+        </mat-card>
+        <div class="colorbar bot--colorbar"></div>
+      </div>
+</div>
+
+
+
+<!-- <div class="login-wrap otp">
+    <mat-card class="box box-wrap">
+    <div class="logo">
+        <img width="128" src="../../../../assets/img/logo/logo@2x.png" alt="logo" title="logo">
+    </div>
+    <mat-card-header class="text-center">
+        <mat-card-title>Login Via OTP</mat-card-title>
+        <mat-card-subtitle>Enter your mobile number and we will send you 6 Digits of OTP number to your mobile number.</mat-card-subtitle>
+    </mat-card-header>
+  
+    <mat-card-content>
+        <form class="row" [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+            <mat-form-field>
+            <input matInput placeholder="Enter Mobile Number" formControlName="mobileNumber">
+            </mat-form-field>
+
+
+            <button type="submit" mat-raised-button color="accent" class="btn-block btn-green" 
+                    [disabled]="!otpForm.valid">CONTINUE</button>
+        </form>
+    </mat-card-content> 
+    <div class="other-login-options text-center">
+        <button mat-button color="primary" [routerLink]="['/login']" class="btn-block">Back to Login</button>
+    </div>   
+    </mat-card>
+</div> -->

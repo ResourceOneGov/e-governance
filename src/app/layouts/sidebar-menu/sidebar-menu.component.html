@@ -1,0 +1,200 @@
+<mat-nav-list *ngIf="!fullSideBar" class="mh-100 main-container">
+    <div class="profile-card">
+
+        <div class="app-logo" (click)="navigatetoHome()">
+            <img src="../../../assets/img/cm.png" alt="User">
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="space-x-20"></div>
+        
+        <!-- <img src="../../../assets/img/user.jpg" alt="User"> -->
+        <label class="hoverable" for="fileInput">
+            <img [src]="url ? url : '../../../assets/img/user.jpg'"> 
+            <div class="hover-text">Choose file</div>
+            <div class="background"></div>
+          </label>
+          <br/>
+        <input id="fileInput" type='file' accept="image/*" (change)="onSelectFile($event)">
+        <div class="header profile-header">
+            <p>{{currentUser.firstName}} {{currentUser.lastName}}</p>
+            <a mat-raised-button color="primary" *ngIf="isAdmin" [routerLink]="['/layouts/user']">
+                {{'menu.createUser' | translate}}</a>
+        </div>
+    </div>
+
+    <div class="largescreen-menu-items">
+    <a mat-list-item routerLinkActive="list-item-active" [routerLink]="['/layouts/dashboard']">
+        <mat-icon>home</mat-icon>
+        <span>{{'menu.dashboard' | translate}}</span>
+    </a>
+
+    <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/eLearning']">
+        <mat-icon>school</mat-icon>
+        <span>{{'menu.eLearning' | translate}}</span>
+    </a>
+
+    <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/questionnaries']">
+        <mat-icon>book</mat-icon>
+        <span>{{'menu.questionnaires' | translate}}</span>
+    </a>
+
+    <!-- <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/broadcast']">
+        <mat-icon><i class="fa fa-rss"></i></mat-icon> 
+       <span> {{'menu.broadcast' | translate}}</span>
+    </a> -->
+
+    <a mat-list-item routerLinkActive="list-item-active" *ngIf="!isCM" [routerLink]="['/layouts/reports']">
+        <mat-icon> insert_chart_outlined</mat-icon>
+       <span> {{'menu.reports' | translate}}</span>
+    </a>
+
+    <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/task']">
+        <mat-icon>assignment</mat-icon>
+       <span> {{'menu.task' | translate}}</span>
+    </a>
+
+    <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/update-status']">
+        <mat-icon><i class="fa fa-pencil-square-o"></i></mat-icon>
+       <span> {{'menu.updateStatus' | translate}}</span>
+    </a>
+
+    <!-- <a mat-list-item routerLinkActive="list-item-active" [routerLink]="['/layouts/attendance']">
+        <mat-icon>calendar_today</mat-icon>
+        <span>Attendance</span>
+    </a> -->
+
+    <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/category']">
+        <mat-icon>category</mat-icon>
+        <span>{{'menu.category' | translate}}</span>
+    </a>
+
+    <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/uploads']">
+        <mat-icon matTooltip="Upload"><i class="fa fa-upload"></i></mat-icon>
+        <span>{{'menu.uploads' | translate}}</span>
+    </a>
+
+    <!-- <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/manage-users']">
+        <mat-icon matTooltip="Manage Users"><i class="fa fa-users" aria-hidden="true"></i></mat-icon>
+        <span>Manage Users</span>
+    </a> -->
+    
+    <a mat-list-item routerLinkActive="list-item-active" [routerLink]="['/layouts/settings']">
+        <mat-icon>settings</mat-icon>
+        <span>{{'menu.settings'| translate}}</span>
+    </a>
+
+    <!-- <a mat-list-item routerLinkActive="list-item-active">
+        <mat-icon>account_circle</mat-icon>
+        <span>Profile</span>
+    </a> -->
+ 
+    <a mat-list-item routerLinkActive="list-item-active" [routerLink]="['/layouts/notifications']">
+        <mat-icon matBadge="{{notificationsCount}}" matBadgePosition="above after" matBadgeSize="small" matBadgeColor="warn">notifications</mat-icon>
+        <span>{{'menu.notifications' | translate}}</span>
+    </a>
+
+    <!-- <a mat-list-item routerLinkActive="list-item-active">
+        <mat-icon>help</mat-icon>
+        <span>Help</span>
+    </a>  -->
+
+    <a mat-list-item routerLinkActive="list-item-active" (click)="logout()">
+        <mat-icon>power_settings_new</mat-icon>
+        <span>{{'menu.logout' | translate}}</span>
+    </a>
+</div>
+</mat-nav-list> 
+
+<mat-nav-list *ngIf="fullSideBar" class="mh-100">
+    <div class="icon-profile-card">
+
+        <div class="app-logo" (click)="navigatetoHome()">
+            <img src="../../../assets/img/cm.png" widht="50px" height="50px">
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="space-x-20"></div>
+        
+        <!-- <img src="../../../assets/img/user.jpg" widht="20px" height="30px"> -->
+        <!-- <div class="header profile-header">
+            <h4>Ananth Arumugasamy</h4>
+            <a mat-raised-button color="primary" [routerLink]="['/layouts/user']">Create User</a>
+        </div> -->
+
+
+    </div>
+    <div class="smallscreen-menu-items">
+        <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/user']">
+            <mat-icon matTooltip="{{'menu.createUser' | translate}}">person_add</mat-icon>
+        </a>
+        <a mat-list-item routerLinkActive="list-item-active" [routerLink]="['/layouts/dashboard']">
+            <mat-icon matTooltip="{{'menu.dashboard' | translate}}">home</mat-icon>
+        </a>
+
+        <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/eLearning']">
+            <mat-icon matTooltip="{{'menu.eLearning' | translate}}">school</mat-icon>
+        </a>
+
+        <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin"[routerLink]="['/layouts/questionnaries']">
+            <mat-icon matTooltip="{{'menu.questionnaires' | translate}}">book</mat-icon>
+        </a>
+
+        <!-- <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/broadcast']">
+            <mat-icon matTooltip="{{'menu.broadcast' | translate}}"><i class="fa fa-rss"></i></mat-icon> 
+        </a> -->
+
+        <a mat-list-item routerLinkActive="list-item-active" *ngIf="!isCM" [routerLink]="['/layouts/reports']">
+            <mat-icon matTooltip="{{'menu.reports' | translate}}"> insert_chart_outlined</mat-icon>
+        </a>
+
+        <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/task']">
+            <mat-icon matTooltip="{{'menu.task' | translate}}">assignment</mat-icon>
+        </a>
+
+        <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/update-status']">
+            <mat-icon matTooltip="{{'menu.updateStatus' | translate}}"><i class="fa fa-pencil-square-o"></i></mat-icon>
+        </a>
+
+        <!-- <a mat-list-item routerLinkActive="list-item-active" [routerLink]="['/layouts/attendance']">
+            <mat-icon matTooltip="Attendance">calendar_today</mat-icon>
+        </a> -->
+
+        <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/category']">
+            <mat-icon matTooltip="{{'menu.category' | translate}}">category</mat-icon>
+        </a>
+        
+        <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/uploads']">
+            <mat-icon matTooltip="{{'menu.uploads' | translate}}"><i class="fa fa-upload"></i></mat-icon>
+        </a>
+
+        <a mat-list-item routerLinkActive="list-item-active" *ngIf="isAdmin" [routerLink]="['/layouts/manage-users']">
+            <mat-icon matTooltip="{{'menu.manageUsers' | translate}}"><i class="fa fa-users" aria-hidden="true"></i></mat-icon>
+        </a>
+        
+        <a mat-list-item routerLinkActive="list-item-active" *ngIf="!isCM" [routerLink]="['/layouts/settings']">
+            <mat-icon matTooltip="{{'menu.settings' | translate}}">settings</mat-icon>
+        </a>
+
+         <!-- <a mat-list-item routerLinkActive="list-item-active">
+            <mat-icon matTooltip="Profile">account_circle</mat-icon>
+        </a> -->
+
+        <a mat-list-item routerLinkActive="list-item-active" *ngIf="!isCM" [routerLink]="['/layouts/notifications']">
+            <mat-icon matTooltip="{{'menu.notifications' | translate}}" matBadge="{{notificationsCount}}" matBadgePosition="above after"  
+                matBadgeColor="warn" matBadgeSize="small">
+                notifications
+            </mat-icon>
+        </a>
+
+        <!-- <a mat-list-item routerLinkActive="list-item-active">
+            <mat-icon matTooltip="Help">help</mat-icon>
+        </a>  -->
+
+        <a mat-list-item routerLinkActive="list-item-active" (click)="logout()">
+            <mat-icon matTooltip="{{'menu.logout' | translate}}">power_settings_new</mat-icon>
+        </a>
+ </div>
+</mat-nav-list>

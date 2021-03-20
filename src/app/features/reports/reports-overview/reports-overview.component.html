@@ -1,0 +1,149 @@
+<div class="maincontainer-report_review w-100">
+	<div class="heading d-flex justify-content-between">
+	    <p>{{reportType === 'elearning' ? 'E-Learning' : reportType === 'task' ? 'Task' : reportType ==='attendance' ? 'Attendance' : reportType === 'issue' ? 'Issue Tracker' : '' }}</p>
+	   <div>
+			<!-- <span class="download" (click)="downloadReport()"><i class="fa fa-download" aria-hidden="true"></i></span>
+			<span class="share" (click)="shareReport()"><i class="fa fa-share-alt" aria-hidden="true"></i></span> -->
+	  </div> 
+    </div> 
+	<p *ngIf="reportType === 'elearning'">
+		<button mat-button class="btn btn-style btn-background btn-bg1 d-flex justify-content-between">
+	      <span>
+			  Total Videos
+		  </span>
+	      <span class="sub-text">{{consolidatedReports.totalVideos}}</span>
+        </button>
+    </p>
+    <p *ngIf="reportType === 'elearning'">
+		<button mat-button class="btn btn-style btn-background btn-bg2 icon-cart d-flex justify-content-between"
+			(click)="showDetailView('totalVideosViewed')">
+    	  <span>Total Videos Viewed
+			 </span>
+    	  <span class="sub-text">{{ totalVideosViewed }}</span>
+    	</button>
+    </p>
+    <p *ngIf="reportType === 'elearning'">
+		<button mat-button class="btn btn-style btn-background btn-bg3 icon-cart d-flex justify-content-between"
+			(click)="showDetailView('totalVideosLiked')">
+			<span>Total Videos Liked
+			</span>
+    		<span class="sub-text">{{  totalVideosLiked }}</span>
+        </button>
+    </p>
+    <p *ngIf="reportType === 'elearning'">
+		<button mat-button class="btn btn-style btn-background btn-bg4 icon-cart d-flex justify-content-between"
+			(click)="showDetailView('totalVideosFavorite')">
+		<span>Total Videos Favourite
+		</span>
+    	<span class="sub-text">{{ totalVideosFavorite }}</span>
+        </button>
+    </p>
+    <p *ngIf="reportType === 'elearning'">
+		<button mat-button class="btn btn-style btn-background btn-bg5 icon-cart d-flex justify-content-between"
+			(click)="showDetailView('totalCompletionTime')">
+	    	<span>Time taken to complete</span>
+	    	<span class="sub-text"></span>
+        </button>
+	</p>
+	<!-- Task Overview -->
+	<p *ngIf="reportType === 'task'">
+		<button mat-button class="btn btn-style btn-background btn-bg1 d-flex justify-content-between">
+	      <span>
+			  Total Tasks
+		  </span>
+	      <span class="sub-text">{{consolidatedReports.totalTasks}}</span>
+        </button>
+    </p>
+    <p *ngIf="reportType === 'task'">
+		<button mat-button class="btn btn-style btn-background btn-bg2 icon-cart d-flex justify-content-between"
+			(click)="showDetailView('completed')">
+    	  <span>Total Completed Tasks
+			 </span>
+    	  <span class="sub-text">{{ totalCompleted }}</span>
+    	</button>
+    </p>
+    <p *ngIf="reportType === 'task'">
+		<button mat-button class="btn btn-style btn-background btn-bg3 icon-cart d-flex justify-content-between"
+			(click)="showDetailView('pending')">
+			<span>Total Pending Tasks
+			</span>
+    		<span class="sub-text">{{ totalPending }}</span>
+        </button>
+    </p>
+    <p *ngIf="reportType === 'task'">
+		<button mat-button class="btn btn-style btn-background btn-bg4 icon-cart d-flex justify-content-between"
+			(click)="showDetailView('inprogress')">
+		<span>Total In Progress Tasks
+		</span>
+    	<span class="sub-text">{{ totalInProgress }}</span>
+        </button>
+    </p>
+    <p *ngIf="reportType === 'task'">
+		<button mat-button class="btn btn-style btn-background btn-bg5 icon-cart d-flex justify-content-between"
+			(click)="showDetailView('completionTime')">
+	    	<span>Time taken to complete</span>
+	    	<span class="sub-text"></span>
+        </button>
+	</p>
+	<!-- Attendance Overview -->
+
+	<p *ngIf="reportType === 'attendance'">
+		<button mat-button class="btn btn-style btn-background btn-bg1 d-flex justify-content-between">
+	      <span>
+			  Total Users
+		  </span>
+	      <span class="sub-text">{{consolidatedReports.totalUsers}}</span>
+        </button>
+    </p>
+    <p *ngIf="reportType === 'attendance'">
+		<button mat-button class="btn btn-style btn-background btn-bg2 icon-cart d-flex justify-content-between"
+			(click)="showDetailView('totalPresent')">
+    	  <span>Total Presents
+			 </span>
+    	  <span class="sub-text">{{ totalPresent }}</span>
+    	</button>
+    </p>
+    <p *ngIf="reportType === 'attendance'">
+		<button mat-button class="btn btn-style btn-background btn-bg3 icon-cart d-flex justify-content-between"
+			(click)="showDetailView('totalAbsent')">
+			<span>Total Absents
+			</span>
+    		<span class="sub-text">{{ totalAbsent }}</span>
+        </button>
+    </p>
+    <p *ngIf="reportType === 'attendance'">
+		<button mat-button class="btn btn-style btn-background btn-bg4 icon-cart d-flex justify-content-between">
+		<span>Total Holidays
+		</span>
+    	<span class="sub-text">{{ totalHolidays }}</span>
+        </button>
+	</p>
+	
+	<p *ngIf="reportType === 'issue'">
+		<button mat-button class="btn btn-style btn-background btn-bg1 icon-cart d-flex justify-content-between"
+			(click)="showDetailView('totalPS')">
+	      <span>
+			  At PS Level
+		  </span>
+	      <span class="sub-text">{{consolidatedReports.issuesAtPSLevel}}</span>
+        </button>
+    </p>
+    <p *ngIf="reportType === 'issue'">
+		<button mat-button class="btn btn-style btn-background btn-bg2 icon-cart d-flex justify-content-between"
+			(click)="showDetailView('totalMPDO')">
+    	  <span>At MPDO Level
+			 </span>
+    	  <span class="sub-text">{{ consolidatedReports.issuesAtMPDOLevel }}</span>
+    	</button>
+    </p>
+    <p *ngIf="reportType === 'issue'">
+		<button mat-button class="btn btn-style btn-background btn-bg3 icon-cart d-flex justify-content-between"
+			(click)="showDetailView('totalJC')">
+			<span>At Joint Collector Level
+			</span>
+    		<span class="sub-text">{{ consolidatedReports.issuesAtJCLevel }}</span>
+        </button>
+    </p>
+
+</div>
+

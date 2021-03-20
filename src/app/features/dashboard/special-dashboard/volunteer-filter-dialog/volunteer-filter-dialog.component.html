@@ -1,0 +1,64 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLongTitle">Leader Filter
+    <form class="example-container" [formGroup]="selectVolunteerForm">
+      <div>
+        <mat-label class="mr-3">Range</mat-label>
+        <mat-form-field appearance="fill" class="m-2">
+          <mat-label>Select Range</mat-label>
+          <mat-select formControlName="range"  class="ml-2">
+            <mat-option value="lessThan">Less Than</mat-option>
+            <mat-option value="greaterThan">Greater Than</mat-option>
+            <mat-option value="between">Between</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span *ngIf="selectVolunteerForm.get('range').value ==='between'">
+          <mat-form-field appearance="fill" class="m-2">
+            <mat-label>Volunteer Range From</mat-label>
+            <input matInput type="number" placeholder="From" formControlName="volunteerRangeFrom" class="ml-2"
+              min="0" max="100">
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="m-2">
+            <mat-label>Volunteer Range To</mat-label>
+            <input matInput type="number" placeholder="To" formControlName="volunteerRangeTo" class="ml-2"
+            min="0" max="100">
+          <!-- <mat-error *ngIf="volunteerRange.invalid">Min size: 0  max size: 100</mat-error> -->
+          </mat-form-field>
+        </span>
+
+        <mat-form-field appearance="fill" *ngIf="selectVolunteerForm.get('range').value ==='greaterThan'">
+          <mat-label></mat-label>
+          <input matInput type="number" placeholder="volunteer range" formControlName="volunteerRangeGreater" class="ml-2"
+            min="0" max="100">
+          <!-- <mat-error *ngIf="volunteerRange.invalid">Min size: 0  max size: 100</mat-error> -->
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" *ngIf="selectVolunteerForm.get('range').value ==='lessThan'">
+          <mat-label></mat-label>
+          <input matInput type="number" placeholder="volunteer range" formControlName="volunteerRangeLess" class="ml-2"
+            min="0" max="100">
+          <!-- <mat-error *ngIf="volunteerRange.invalid">Min size: 0  max size: 100</mat-error> -->
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Select District</mat-label>
+        <mat-select formControlName = "district" >
+          <mat-option *ngFor="let district of this.filteredDistricts" [value]="district" (onSelectionChange)="showMandalInfo(district)">{{district}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Select a Mandal</mat-label>
+        <mat-select formControlName="mandal" >
+          <mat-option *ngFor="let mandal of mandals" [value]="mandal">{{mandal}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="d-flex flex-end">
+              <button class="submit-btn" type="submit" mat-stroked-button (click)="getLeadersInfo()">Submit</button>
+      </div>
+      <!-- <button mat-flat-button color="warn" (click)="resetFilters()">Reset</button> -->
+    </form>
+  </h5>
+  <button type="button" class="close" aria-label="Close" (click)="dialogClose()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>

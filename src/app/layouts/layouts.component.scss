@@ -1,0 +1,27 @@
+.mainlayout{
+	height:100vh;
+	.mat-drawer-container {
+	    position: inherit;
+	    background-color:#fff;
+	    color:#000;
+	    height:100%
+	}
+	.mat-drawer{
+		background-color:#fff;
+		color:#000;
+		overflow-y:auto;
+	}
+	.mat-drawer-content{
+		 background-color: rgba(220, 220, 205, 0.7) !important;
+	    position: relative;
+
+	}
+	.mat-drawer-inner-container {
+	    scrollbar-width: none; /* Firefox */
+	    -ms-overflow-style: none;  /* IE 10+ */
+	    &::-webkit-scrollbar {
+	        width: 0px;
+	        background: transparent; /* make scrollbar transparent */
+	    }
+	}
+}

@@ -1,0 +1,60 @@
+
+<div class="settings-container d-flex justify-content-center align-items-center m-5 h-100">
+    <mat-card class="w-100">        
+        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+        <mat-card-header class="justify-content-between flex-wrap  m-4 border-bottom border-secondary">
+            <mat-card-title>{{'settings.settings' | translate}}</mat-card-title>
+            <mat-card-subtitle>
+                <div style='color:#ff7355' *ngIf="changePasswordForm.get('confirmPassword').errors && 
+                changePasswordForm.get('confirmPassword').errors.ConfirmPassword">   
+                    New Passsword and Confirm New Password didn't match.
+                </div>
+            </mat-card-subtitle>
+            <mat-icon matTooltip="Settings">info</mat-icon>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="d-flex justify-content-between flex-wrap m-2">
+                <div class="col-md-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'settings.changeLanguage' | translate}}</mat-label>
+                        <mat-select [formControl]="language" (selectionChange)="changeLanguage(language)">
+                          <mat-option *ngFor="let language of languages" [value]="language.value">{{language.viewValue}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+            </div>
+            <form [formGroup]="changePasswordForm">
+                <h6 class="col-12 ml-2 my-3 font-weight-bold text-primary">{{'settings.changePassword' | translate}}</h6>
+
+                <div class="d-flex justify-content-between flex-wrap m-2">
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'settings.enterOldPassword' | translate}}</mat-label>
+                            <input matInput placeholder="Enter Old Password" formControlName="oldPassword" type="password" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'settings.enterNewPassword' | translate}}</mat-label>
+                            <input matInput placeholder="Enter New Password" formControlName="newPassword" type="password" required>                           
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'settings.reconfirmNewPassword' | translate}}</mat-label>
+                            <input matInput placeholder="Re Confirm Password" formControlName="confirmPassword" type="password" required>                           
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center w-100">
+                    <button type="button" mat-raised-button class="btn btn-success align-self-center col-md-5" 
+                            (click)="changePassword()"
+                            [disabled]="!changePasswordForm.valid">{{'settings.saveChanges' | translate}}
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>   
+    </mat-card>
+</div>

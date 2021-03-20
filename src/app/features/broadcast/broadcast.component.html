@@ -1,0 +1,81 @@
+<!-- <div id="agora_local" class="d-flex justify-content-around" *ngIf="isBroadcastStarted">
+  <button mat-raised-button color="warn" class="ml-2 broadcast-btn l-40" (click)="muteOrUnmuteBroadCasting()">
+    {{this.muteBtn}}</button>
+  <button mat-raised-button color="warn" class="ml-5 broadcast-btn r-40" (click)="stopBroadCasting('manual')">
+    End Broadcast</button>
+</div>
+<div class="remote-containers">
+  <div class="remote_calls" *ngFor="let remote of remoteCalls;" [id]="remote">
+  </div>
+</div>
+
+<div class="d-flex w-100 vh-100 align-items-center justify-content-center flex-container">
+  
+  <div class="d-flex w-100 flex-column justify-content-center align-items-center">
+    <span *ngIf="secondsToMore > 0" class="timer text-info font-weight-bold"> Broadcast Starts in 
+      <countdown [config]="{leftTime: secondsToMore, notify: 0}" (event)="notifyEvent($event)"></countdown>
+    </span>
+
+    <div *ngIf="secondsToMore < 0 && isBroadCastScheduled && !isBroadcastStarted" class="text-info font-weight-bold">
+      Broadcast was scheduled for {{this.scheduledTime}}. Please Start the Broadcast. 
+    </div>
+
+    <span class="no-broadcast text-info font-weight-bold" *ngIf="!isBroadCastScheduled"> 
+      There are no broadcasts scheduled
+    </span>
+
+    <button mat-raised-button color="primary" (click)="startBroadCasting()" class="w-25 mt-2"
+      *ngIf="!isBroadcastStarted && isBroadCastScheduled && secondsToMore < 0">
+    Turn On Camera
+    </button>
+  </div>
+</div>
+ -->
+
+ <div class="broadcastmain-container w-100">
+
+  <div id="agora_local" *ngIf="isBroadcastStarted">
+    <button mat-raised-button color="warn" class="ml-2 broadcast-btn l-40" (click)="muteOrUnmuteBroadCasting()">
+      {{this.muteBtn}}</button>
+    <button mat-raised-button color="warn" class="ml-5 broadcast-btn r-40" (click)="stopBroadCasting('manual')">
+      End Broadcast</button>
+  </div>
+
+  <div class="peopleJoined bg-info" *ngIf="isBroadcastStarted">
+    <span *ngIf="count <= 0"> 0 </span>
+    <span *ngIf="count > 0"> {{count - 1}} </span> people joined
+  </div>
+
+  <div class="remote-containers">
+     <div class="remote_calls" *ngFor="let remote of remoteCalls;" [id]="remote"></div>
+  </div>
+
+
+  <div class="d-flex justify-content-center align-items-center w-100 h-100">
+  <!-- <p class="m-2" *ngIf="!disableStopBtn">{{this.count}} joined</p> -->
+    <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+      <span *ngIf="secondsToMore > 0" class="timer text-info font-weight-bold"> {{'broadcast.broadcastStartsIn' | translate}} 
+        <countdown [config]="{leftTime: secondsToMore, notify: 0}" (event)="notifyEvent($event)"></countdown>
+      </span>
+
+      <!-- <div *ngIf="isBroadCastScheduled && !isBroadcastStarted" class="text-info font-weight-bold broadcast-info">
+        <span> Broadcast was scheduled for {{this.scheduledTime}}.</span>
+      </div> -->
+
+      <div *ngIf="secondsToMore < 0 && isBroadCastScheduled && !isBroadcastStarted" class="text-info font-weight-bold broadcast-info">
+       <span> {{'broadcast.broadcastScheduled' | translate}} {{this.scheduledTime}}.</span>
+        <p class="text-center"> {{'broadcast.startBroadcast' | translate}}. </p>
+      </div>
+
+      <span class="broadcast-info text-info font-weight-bold" *ngIf="!isBroadCastScheduled"> 
+        {{'broadcast.noBroadcast' | translate}}
+      </span>
+
+      <button mat-raised-button color="primary" (click)="startBroadCasting()" class="w-25 mt-2"
+        *ngIf="!isBroadcastStarted && isBroadCastScheduled && secondsToMore < 0">
+      {{'broadcast.turnOnCamera' | translate}}
+      </button>
+    </div>
+  </div>
+</div>
+

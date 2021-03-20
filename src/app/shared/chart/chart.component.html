@@ -1,0 +1,27 @@
+<div class="d-flex flex-column bg-white container rounded-lg shadow">
+    <div class="d-flex justify-content-around mb-1">
+        <div class="p-2 d-flex flex-column col-md-5">
+            <span class="font-weight-bold">Total {{profile}}</span>
+            <span>{{count}}</span>
+        </div>
+        <div class="p-2 col-md-6">
+            <mat-form-field style="width: inherit;">
+                <mat-label>Chart Type</mat-label>
+                <mat-select [(ngModel)]="selectedChart" name="selectedChart">
+                <mat-option *ngFor="let chart of charts" [value]="chart">
+                    {{chart}} Chart
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div *ngIf="selectedChart === 'Pie'">
+        <app-pie-chart></app-pie-chart>
+    </div>
+    <div *ngIf="selectedChart === 'Bar'">
+        <app-bar-chart></app-bar-chart>
+    </div>   
+    <div *ngIf="selectedChart === 'Line'">
+        <app-line-chart></app-line-chart>
+    </div>
+</div>

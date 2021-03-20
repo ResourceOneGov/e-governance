@@ -1,0 +1,33 @@
+.mat-toolbar{
+	background: #6998b7;
+    color: #fff;
+}
+.mat-toolbar-multiple-rows{
+	min-height:55px;
+}
+.mat-toolbar-row{
+	height:55px;
+	.mat-icon{
+		font-size:20px;
+	}
+} 
+ul li {
+    list-style: none;
+  }
+.app-logo {
+    width: 250px;
+}
+.toolBarAlign {
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15)!important;
+}
+.schedulebutton{
+	line-height:30px;
+	background-color: #fff;
+  color: #3d9f3d;
+}
+
+.title{
+  margin-left:10%;
+}

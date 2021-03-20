@@ -1,0 +1,14 @@
+<div class="mainlayout">
+    <mat-drawer-container>
+        <mat-drawer mode="side" [opened] = "true">
+            <app-sidebar-menu [fullSideBar]="sideBarOpen" [currentUser]="currentUser"></app-sidebar-menu>
+        </mat-drawer>
+        <mat-drawer-content class="bg-white">
+            <app-header (toggleSideBarMenu)="sideBarToggler($event)"></app-header>
+            <div class="app-container">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>
+

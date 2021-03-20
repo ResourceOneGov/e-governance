@@ -1,0 +1,131 @@
+:host {
+  .mat-drawer-inner-container {
+    background-color: #4685b0;
+    color: #fff;
+  }
+
+  .mat-icon {
+    vertical-align: middle;
+    margin-right: 20px;
+  }
+
+  .profile-card {
+    text-align: center;
+    padding: 0 20px 20px 20px;
+
+    img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+
+  .profile-header {
+    button {
+      width: 100%;
+    }
+
+    p {
+      margin-top: 5px;
+      font-weight: normal;
+      color: #135b8d;
+    }
+  }
+
+  .space-x-20 {
+    height: 10px;
+  }
+
+  .app-logo {
+    font-size: 26px;
+    font-weight: 300;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+
+  .icon-profile-card {
+    text-align: center;
+
+    img {
+      width: 50px;
+      height: 40px;
+      border-radius: 50%;
+      margin-left: 10px;
+    }
+  }
+
+  .largescreen-menu-items {
+    a {
+      height: 40px;
+      font-size: 15px;
+
+      .material-icons {
+        font-size: 20px;
+        color: #135b8d;
+      }
+    }
+  }
+
+  .smallscreen-menu-items {
+    a {
+      height: 40px;
+
+      .material-icons {
+        font-size: 20px;
+        color: #135b8d;
+        padding-left: 13px;
+      }
+    }
+  }
+
+  p {
+    font-family: Lato;
+  }
+  
+  img {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+  }
+  .hoverable{
+    position: relative;
+    // display: block;
+    cursor: pointer;
+    height: 80px;
+    width: 85px;
+    // border: 5px solid #000;
+    border-radius: 50%;
+    margin: 0;
+  }
+  .hoverable .hover-text{
+    position: absolute;
+    display: none;
+    top: 50%;
+    left:  50%;
+    transform: translate(-50%,-50%);   
+    z-index: 2;
+  }
+  .hoverable .background{
+    position: absolute;
+    display: none;
+    top: 0;
+    left:  0;
+    bottom: 0;
+    right: 0;
+    background-color:rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+    border-radius: 50%;
+    z-index: 1;
+  }
+  .hoverable:hover .hover-text{
+    display: block;
+  }
+  .hoverable:hover .background{
+    display: block;
+  }
+  
+  #fileInput{
+    display: none;
+  }
+}

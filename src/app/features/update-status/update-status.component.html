@@ -1,0 +1,221 @@
+<div class="taskmain-container d-flex justify-content-center align-items-center m-5 h-100 bg-secondary">
+  <mat-card class="w-100">
+      <mat-card-header class="justify-content-between  m-4 border-bottom border-secondary">
+          <mat-card-title>{{'updateStatus.updateStatus' | translate}}</mat-card-title>
+          <mat-icon matTooltip="Update the task status">info</mat-icon>
+      </mat-card-header>
+      <mat-card-content>
+          <form [formGroup]="updateStatusForm" class="p-2 d-flex flex-start flex-wrap">
+              <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+                  <mat-label>{{'reports.district' | translate}}</mat-label>
+                  <mat-select formControlName = "district" placeholder=" Select District" #districtSelect
+                    (selectionChange)="filterLocations($event, 2)">
+                    <mat-option>
+                      <ngx-mat-select-search formControlName = "districtFilter" 
+                          placeholderLabel="Find District..." 
+                          noEntriesFoundLabel="'no matching district found'"
+                      ></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let district of filteredDistricts | async" [value]="district._id">
+                      {{district.locationName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+                  <mat-label>{{'reports.parliament' | translate}}</mat-label>
+                  <mat-select formControlName = "parliament" placeholder=" Select Parliament" #parliamentSelect
+                  (selectionChange)="filterLocations($event, 3)">
+                    <mat-option>
+                      <ngx-mat-select-search formControlName = "parliamentFilter" 
+                          placeholderLabel="Find Parliament..." 
+                          noEntriesFoundLabel="'no matching parliament found'"
+                      ></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let parliament of filteredParliaments | async" [value]="parliament._id">
+                      {{parliament.locationName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+                  <mat-label>{{'reports.assembly' | translate}}</mat-label>
+                  <mat-select formControlName = "assembly" placeholder=" Select Assembly" #assemblySelect
+                  (selectionChange)="filterLocations($event, 4)">
+                    <mat-option>
+                      <ngx-mat-select-search formControlName = "assemblyFilter" 
+                          placeholderLabel="Find Assembly..." 
+                          noEntriesFoundLabel="'no matching assembly found'"
+                      ></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let assembly of filteredAssemblies | async" [value]="assembly._id">
+                      {{assembly.locationName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+                  <mat-label>{{'reports.mandal' | translate}}</mat-label>
+                  <mat-select formControlName = "mandal" placeholder=" Select mandal" #mandalSelect>
+                    <mat-option>
+                      <ngx-mat-select-search formControlName = "mandalFilter" 
+                          placeholderLabel="Find mandal..." 
+                          noEntriesFoundLabel="'no matching mandal found'"
+                      ></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let mandal of filteredMandals | async" [value]="mandal._id">
+                      {{mandal.locationName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <!-- <mat-form-field class="mt-2 col-md-3 col-sm-2 col-xs-1" appearance="outline">
+                  <mat-select formControlName = "secretariat" placeholder=" Select Secretariat" #secretariatSelect>
+                    <mat-option>
+                      <ngx-mat-select-search formControlName = "secretariatFilter" 
+                          placeholderLabel="Find Secretariat..." 
+                          noEntriesFoundLabel="'no matching Secretariat found'"
+                      ></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let secretariat of secretariats | async" [value]="secretariat">
+                      {{secretariat}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+
+                <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+                  <mat-label>{{'reports.secretariat' | translate}}</mat-label>
+                  <mat-select formControlName = "secretariat" placeholder=" Select Secretariat" #secretariatSelect>
+                    <mat-option>
+                      <ngx-mat-select-search formControlName = "secretariatFilter" 
+                          placeholderLabel="Find Secretariat..." 
+                          noEntriesFoundLabel="'no matching secretariat found'"
+                      ></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let secretariat of filteredSecretariats | async" [value]="secretariat.value">
+                      {{secretariat.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+                  <mat-label>{{'reports.gvType' | translate}}</mat-label>
+                  <mat-select formControlName = "gvType" placeholder=" Select GvType" #gvTypeSelect>
+                    <mat-option>
+                      <ngx-mat-select-search formControlName = "gvTypeFilter" 
+                          placeholderLabel="Find GvType..." 
+                          noEntriesFoundLabel="'no matching GvType found'"
+                      ></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let gvType of filteredGvTypes | async" [value]="gvType.value">
+                      {{gvType.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+                  <mat-label>{{'updateStatus.users' | translate}}</mat-label>
+                  <mat-select formControlName = "user" placeholder="User" #userSelect
+                   (selectionChange)="getTasks($event)">
+                    <mat-option>
+                      <ngx-mat-select-search formControlName = "userFilter"
+                          placeholderLabel="Find User..." 
+                          noEntriesFoundLabel="'no matching user found'"
+                      ></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let user of filteredUsers | async" [value]="user._id">
+                      {{user.userId}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+                  <mat-label>{{'updateStatus.task' | translate}}</mat-label>
+                  <mat-select formControlName = "task" placeholder="Task" #taskSelect>
+                    <mat-option>
+                      <ngx-mat-select-search formControlName = "taskFilter"
+                          placeholderLabel="Find task..." 
+                          noEntriesFoundLabel="'no matching task found'"
+                      ></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let task of filteredTasks | async" [value]="task._id">
+                      {{task.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+                  <mat-label>{{'updateStatus.taskStatus' | translate}}</mat-label>
+                  <mat-select formControlName = "status" placeholder=" Select Task Status" #statusSelect>
+                    <mat-option>
+                      <ngx-mat-select-search formControlName = "statusFilter" 
+                          placeholderLabel="Find status..." 
+                          noEntriesFoundLabel="'no matching status found'"
+                      ></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let status of filteredStatuses | async" [value]="status.code">
+                      {{status.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+                  <mat-label>{{'updateStatus.updatedBy' | translate}}</mat-label>
+                  <mat-select formControlName = "updatedBy" placeholder=" Select updatedBy" #updatedBySelect>
+                    <mat-option>
+                      <ngx-mat-select-search formControlName = "updatedByFilter" 
+                          placeholderLabel="Find updatedBy..." 
+                          noEntriesFoundLabel="'no matching updatedBy found'"
+                      ></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let updatedBy of filteredStatusUpdatedBy | async" [value]="updatedBy.value">
+                      {{updatedBy.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              
+                <div class="d-flex justify-content-around w-100">
+                    <div class="p-3 col-md-12">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>{{'updateStatus.comments' | translate}}</mat-label>
+                            <textarea matInput placeholder="Task Description" formControlName="comments"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-around w-100">
+                    <div class="p-3 col-md-12  file-uploaddiv">
+                        <mat-form-field  class="w-100" appearance="outline">
+                            <mat-label>{{'updateStatus.fileUpload' | translate}}</mat-label>
+                            <ngx-mat-file-input #fileUploader formControlName="file" placeholder="file upload" [accept]="'image/*,.pdf,.csv'">
+                            </ngx-mat-file-input>
+                            <button mat-icon-button matSuffix *ngIf="!fileUploader.empty" (click)="fileUploader.clear($event)">
+                                <mat-icon>clear</mat-icon>
+                            </button>
+                            <mat-icon matSuffix>attachment</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="progress form-group" *ngIf="progress > 0">
+                  <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
+                  </div>
+               </div>
+                
+                <div class="d-flex justify-content-center align-items-center w-100">
+                    <button type="button" mat-raised-button class="btn btn-success align-self-center col-md-5" 
+                            (click)="uploadFile()"
+                            [disabled]="!updateStatusForm.valid || fileUploader.empty">Submit Status
+                    </button>
+                </div>
+          </form>
+      </mat-card-content> 
+      <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-grid-pulse" 
+          [fullScreen] = "true">
+          <p *ngIf="progress > 0 && progress < 100" style="color: white" >{{ progressMessage }} </p>
+          <p *ngIf="progress == 0" style="color: white" > Uploading ... </p>
+          <p *ngIf="progress == 100" style="color: white" > Progressing ... </p>
+      </ngx-spinner>  
+  </mat-card>
+</div>

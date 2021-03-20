@@ -1,0 +1,270 @@
+<div class="reports-container d-flex justify-content-center align-items-center m-5 h-100 bg-secondary">
+    <mat-card class="w-100">
+        <mat-card-header class="justify-content-between  m-4 border-bottom border-secondary">
+            <mat-card-title>{{'reports.reports' | translate}}</mat-card-title>
+            <mat-icon>info</mat-icon>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="reportsForm" class="p-2 d-flex flex-start flex-wrap">
+
+                <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+                    <mat-select formControlName = "group" placeholder="{{'reports.group' | translate}}" #groupSelect>
+                      <mat-option>
+                        <ngx-mat-select-search formControlName = "groupFilter" 
+                            placeholderLabel="Find group..." 
+                            noEntriesFoundLabel="'no matching group found'"
+                        ></ngx-mat-select-search>
+                      </mat-option>
+                      <mat-option *ngFor="let group of groups" [value]="group._id" (click)="enableLocationFilters(group)">
+                        {{group.roleName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+                    <mat-label>{{'reports.reportType' | translate}}</mat-label>
+                    <mat-select formControlName = "reportType" placeholder=" Select ReportType" #reportTypeSelect>
+                      <mat-option>
+                        <ngx-mat-select-search formControlName = "reportTypeFilter" 
+                            placeholderLabel="Find report type..." 
+                            noEntriesFoundLabel="'no matching reportType found'"
+                        ></ngx-mat-select-search>
+                      </mat-option>
+                      <mat-option *ngFor="let reportType of reportTypes" [value]="reportType.value">
+                        {{reportType.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline"
+                    *ngIf="showDistricts">
+                    <mat-label>{{'reports.district' | translate}}</mat-label>
+                    <mat-select formControlName = "district" placeholder="Select District" #districtSelect
+                      (selectionChange)="filterLocations($event, 2)" [disabled]="disableDistrict" [multiple]="true">
+                      <mat-option>
+                        <ngx-mat-select-search formControlName = "districtFilter" 
+                            placeholderLabel="Find District..." 
+                            noEntriesFoundLabel="'no matching district found'"
+                            [showToggleAllCheckbox]="true" (toggleAll)="toggleSelectAllDistricts($event)"
+                        ></ngx-mat-select-search>
+                      </mat-option>
+                      <!-- <mat-option>None</mat-option> -->
+                      <mat-option *ngFor="let district of filteredDistricts | async" [value]="district._id">
+                        {{district.locationName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+  
+                  <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline"
+                    *ngIf="showParliaments">
+                    <mat-label>{{'reports.parliament' | translate}}</mat-label>
+                    <mat-select formControlName = "parliament" placeholder=" Select Parliament" #parliamentSelect
+                    (selectionChange)="filterLocations($event, 3)" [disabled]="disableParliament" [multiple]="true">
+                      <mat-option>
+                        <ngx-mat-select-search formControlName = "parliamentFilter" 
+                            placeholderLabel="Find Parliament..." 
+                            noEntriesFoundLabel="'no matching parliament found'"
+                            [showToggleAllCheckbox]="true" (toggleAll)="toggleSelectAllParliaments($event)"
+                        ></ngx-mat-select-search>
+                      </mat-option>
+                      <!-- <mat-option>None</mat-option> -->
+                      <mat-option *ngFor="let parliament of filteredParliaments | async" [value]="parliament._id">
+                        {{parliament.locationName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+  
+                  <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline"
+                    *ngIf="showAssemblies">
+                    <mat-label>{{'reports.assembly' | translate}}</mat-label>
+                    <mat-select formControlName = "assembly" placeholder=" Select Assembly" #assemblySelect
+                    (selectionChange)="filterLocations($event, 4)" [disabled]="disableAssembly" [multiple]="true">
+                      <mat-option>
+                        <ngx-mat-select-search formControlName = "assemblyFilter" 
+                            placeholderLabel="Find Assembly..." 
+                            noEntriesFoundLabel="'no matching assembly found'"
+                            [showToggleAllCheckbox]="true" (toggleAll)="toggleSelectAllAssemblies($event)"
+                        ></ngx-mat-select-search>
+                      </mat-option>
+                      <!-- <mat-option>None</mat-option> -->
+                      <mat-option *ngFor="let assembly of filteredAssemblies | async" [value]="assembly._id">
+                        {{assembly.locationName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+  
+                  <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline" 
+                  *ngIf="showMandals">
+                    <mat-label>{{'reports.mandal' | translate}}</mat-label>
+                    <mat-select formControlName = "mandal" placeholder=" Select mandal" #mandalSelect
+                      (selectionChange)="filterLocations($event, 5)" [disabled]="disableMandal" [multiple]="true">
+                      <mat-option>
+                        <ngx-mat-select-search formControlName = "mandalFilter" 
+                            placeholderLabel="Find mandal..." 
+                            noEntriesFoundLabel="'no matching mandal found'"
+                            [showToggleAllCheckbox]="true" (toggleAll)="toggleSelectAllMandals($event)"
+                        ></ngx-mat-select-search>
+                      </mat-option>
+                      <!-- <mat-option>None</mat-option> -->
+                      <mat-option *ngFor="let mandal of filteredMandals | async" [value]="mandal._id">
+                        {{mandal.locationName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+  
+                  <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline"
+                    *ngIf="showSecretariats">
+                    <mat-label>{{'reports.secretariat' | translate}}</mat-label>
+                    <mat-select formControlName = "secretariat" placeholder=" Select Secretariat" #secretariatSelect
+                    (selectionChange)="filterLocations($event, 6)" [disabled]="disableSecretariat" [multiple]="true">
+                      <mat-option>
+                        <ngx-mat-select-search formControlName = "secretariatFilter" 
+                            placeholderLabel="Find Secretariat..." 
+                            noEntriesFoundLabel="'no matching secretariat found'"
+                            [showToggleAllCheckbox]="true" (toggleAll)="toggleSelectAllSecretariats($event)"
+                        ></ngx-mat-select-search>
+                      </mat-option>
+                      <!-- <mat-option>None</mat-option> -->
+                      <mat-option *ngFor="let secretariat of filteredSecretariats | async" [value]="secretariat._id">
+                        {{secretariat.locationName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+  
+                  <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline"
+                    *ngIf="showGvTypes">
+                    <mat-label>{{'reports.gvType' | translate}}</mat-label>
+                    <mat-select formControlName = "gvType" placeholder=" Select GvType" #gvTypeSelect
+                      (selectionChange)="selectedGVType($event)" [multiple]="true">
+                      <mat-option>
+                        <ngx-mat-select-search formControlName = "gvTypeFilter" 
+                            placeholderLabel="Find GvType..." 
+                            noEntriesFoundLabel="'no matching GvType found'"
+                            [showToggleAllCheckbox]="true" (toggleAll)="toggleSelectAllGV($event)"
+                        ></ngx-mat-select-search>
+                      </mat-option>
+                      <!-- <mat-option>None</mat-option> -->
+                      <mat-option *ngFor="let gvType of filteredGvTypes | async" [value]="gvType.value">
+                        {{gvType.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline" *ngIf="reportsForm.get('reportType').value !== 'issue'">
+                    <mat-label>{{'reports.users' | translate}}</mat-label>
+                    <mat-select msInfiniteScroll (infiniteScroll)="getNextUsers()" formControlName = "user" placeholder="Select User" 
+                      [multiple]="true" #userSelect>
+                      <!-- <mat-select-trigger> -->
+                          <!-- {{this.selectedUsers && this.selectedUsers.length > 0 ? this.selectedUsers[0].userId : ''}}
+                        <span *ngIf="this.selectedUsers?.length > 1">
+                          (+{{this.selectedUsers.length - 1}} {{this.selectedUsers?.length === 2 ? 'user' : 'users'}})
+                        </span> -->
+                      <!-- </mat-select-trigger> -->
+                      <mat-option>
+                        <ngx-mat-select-search formControlName = "userFilter" [searching] = "searchingUsers"
+                        [disableScrollToActiveOnOptionsChanged]="true"
+                            placeholderLabel="Find User..." 
+                            noEntriesFoundLabel="'no matching user found'"
+                            [showToggleAllCheckbox]="true" (toggleAll)="toggleSelectAll($event)"
+                        ></ngx-mat-select-search>
+                      </mat-option>
+                      <mat-option *ngFor="let user of filteredUsers | async" [value]="user._id" (click)="getSelectedUsers(user)">
+                        {{user.userId}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                 
+                  <!-- <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+                  <mat-label>Users</mat-label>
+                  <mat-select msInfiniteScroll (infiniteScroll)="getNextUsers()" formControlName = "user" placeholder="Select User" 
+                  [multiple]="true" #userSelect>
+                    <mat-option>
+                      disableScrollToActiveOnOptionsChanged should be set to true
+                        <ngx-mat-select-search
+                            placeholderLabel="search"
+                            [disableScrollToActiveOnOptionsChanged]="true"
+                            noEntriesFoundLabel="No entry matches">
+                        </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let option of filteredUsers | async" [value]="option">{{option}}</mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+
+
+                  <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+                    <mat-label>{{'reports.startDate' | translate}}</mat-label>
+                    <input matInput [matDatepicker]="fromPicker" formControlName="from" [max]="today"
+                      (keydown)="handleDateInput($event)" [autocomplete]="'off'">
+                    <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #fromPicker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field class="mt-2 col-md-2 col-sm-4 col-xs-12" appearance="outline">
+                    <mat-label>{{'reports.endDate' | translate}}</mat-label>
+                    <input matInput [matDatepicker]="toPicker" [min]="reportsForm.get('from').value" [max]="today" 
+                      formControlName= "to" (keydown)="handleDateInput($event)" [autocomplete]="'off'">
+                    <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #toPicker></mat-datepicker>
+                  </mat-form-field>
+                    
+                    <div class="d-flex justify-content-center align-items-center w-100">
+                        <button (click)="getReports()" mat-raised-button color="accent" class="btn-green align-self-center col-md-5" 
+                                [disabled]="!reportsForm.valid || isSubmitted">{{'reports.submitReport' | translate}}
+                                <mat-icon  class="ml-2 mat-spinner-color">
+                                  <mat-spinner diameter="20" *ngIf="showLoading"></mat-spinner>
+                                </mat-icon>
+                        </button>
+                    </div>
+            </form>
+        </mat-card-content> 
+        <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-grid-pulse" [fullScreen] = "false">
+          <p style="color: white" > Loading... 
+        </ngx-spinner> 
+    </mat-card>
+     
+</div>
+
+<div class="report-detail d-flex justify-content-between m-5 h-100 bg-secondary" *ngIf="showReport">
+    <mat-card class="w-100">
+      <mat-card-header>
+        <mat-card-title>{{ reportType === 'elearning' ? 'E-Learning' : reportType === 'task' ? 'Task ': 
+          reportType === 'attendance' ? 'Attendance' : reportType === 'issue' ? 'Issue Tracker' : ''}} Report</mat-card-title>
+        <mat-card-subtitle>{{duration}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="d-flex" *ngIf="!showDetailReport">
+        <div class="col-md-8 col-xs-12 chart-div">
+          <app-column-chart [chartOptions]="chartOptions"></app-column-chart>
+        </div>
+        <div class="col-md-4 col-xs-12 badges-div">
+          <app-reports-overview [reportType]="reportType" [consolidatedReports]="consolidatedReports" (detailReportType)="selectedDetailReportType($event)"
+                    (showDetailReport)="displayDetailReport($event)"></app-reports-overview>
+        </div>
+      </mat-card-content>
+      <mat-card-content *ngIf="showDetailReport">
+          <div class="d-flex justify-content-between">
+            <button mat-button (click)="hideDetailReport()" color="primary">{{'reports.goBack' | translate}}</button> 
+            <div>
+              <mat-form-field>
+                <mat-label>{{'reports.detailedReportType' | translate}}</mat-label>
+                <mat-select [(ngModel)]="detailReportType">
+                  <mat-option *ngIf="reportType === 'elearning'" value= "totalVideosViewed">Total Videos Viewed</mat-option>
+                  <mat-option *ngIf="reportType === 'elearning'" value= "totalVideosLiked">Total Videos Liked</mat-option>
+                  <mat-option *ngIf="reportType === 'elearning'" value= "totalVideosFavorite">Total Videos Favorite</mat-option>
+                  <mat-option *ngIf="reportType === 'elearning'" value= "totalCompletionTime">Completion Time Taken</mat-option>
+                  <mat-option *ngIf="reportType === 'task'" value= "completed">Total Completed</mat-option>
+                  <mat-option *ngIf="reportType === 'task'" value= "pending">Total Pending</mat-option>
+                  <mat-option *ngIf="reportType === 'task'" value= "inprogress">Total In Progress</mat-option>
+                  <mat-option *ngIf="reportType === 'task'" value= "completionTime">Completion Time Taken</mat-option>
+                  <mat-option *ngIf="reportType === 'attendance'" value= "totalPresent">Total Present</mat-option>
+                  <mat-option *ngIf="reportType === 'attendance'" value= "totalAbsent">Total Absent</mat-option>
+                  <mat-option *ngIf="reportType === 'issue'" value= "totalPS">Total PS</mat-option>
+                  <mat-option *ngIf="reportType === 'issue'" value= "totalMPDO">Total MPDO</mat-option>
+                  <mat-option *ngIf="reportType === 'issue'" value= "totalJC">Total JC</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>           
+          </div>
+          <app-detail-report-view [reportObj]="reportObj" [type]="detailReportType" [consolidatedReports]="consolidatedReports"></app-detail-report-view>
+      </mat-card-content>        
+    </mat-card>
+</div>

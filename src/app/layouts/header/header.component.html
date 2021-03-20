@@ -1,0 +1,90 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row class="toolBarAlign">
+        
+        <div>
+            <button mat-icon-button (click)="toggleSideBar()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </div>
+        <div class="text-center title">
+            FOA- Field Operations Agency
+        </div>
+        
+        <div>
+            <div fxLayoutGap="20px">
+                <!-- <span fxLayout="column" *ngIf="isAdmin">
+                    <button  *ngIf="!isBroadCastScheduled" mat-button aria-label="Select a version" mattooltip="Select a version of the documentation" 
+                        class="mat-focus-indicator mat-tooltip-trigger mat-menu-trigger mat-button mat-button-base"
+                        [matMenuTriggerFor]="scheduleMenu">
+                        <span class="mat-button-wrapper"> {{'broadcast.scheduleBroadcast' | translate}}
+                            <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color">arrow_drop_down</mat-icon>
+                        </span>
+                        <div matripple="" class="mat-ripple mat-button-ripple"></div><div class="mat-button-focus-overlay"></div>
+                    </button>
+                    <mat-menu #scheduleMenu>
+                        <button mat-menu-item (click)="scheduleNow()">
+                            <mat-icon>play_circle_outline</mat-icon>
+                            <span>{{'broadcast.scheduleNow' | translate}}</span>
+                        </button>
+                        <button mat-menu-item (click)="scheduleBroadcast('schedule')">
+                            <mat-icon>schedule</mat-icon>                        
+                            <span>{{'broadcast.scheduleLater' | translate}}</span>
+                        </button>
+                    </mat-menu>
+                    
+                    <button [disabled]="isBroadcastStarted"  *ngIf="isBroadCastScheduled" mat-button aria-label="Select a version" mattooltip="Select a version of the documentation" 
+                        class="mat-focus-indicator mat-tooltip-trigger mat-menu-trigger mat-button mat-button-base"
+                        [matMenuTriggerFor]="menu">
+                        <span class="mat-button-wrapper"><i class="fa fa-rss  pr-2"></i> 
+                            <span *ngIf="secondsToMore < 0" [ngClass]="{'text-warning font-weight-bold': !isBroadcastStarted, 
+                                'text-muted font-weight-bold': isBroadcastStarted}"> Active Broadcast</span>
+                            <span *ngIf="secondsToMore === 0">{{this.broadCastScheduledAt}} </span>
+                            <span *ngIf="secondsToMore > 0" class="font-weight-bold"> Broadcast Starts in 
+                                <countdown [config]="{leftTime: secondsToMore, notify: 0}" (event)="notifyEvent($event)"></countdown>
+                            </span>
+                            <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color">
+                                more_vert
+                            </mat-icon>
+                        </span>
+                        <div matripple="" class="mat-ripple mat-button-ripple"></div><div class="mat-button-focus-overlay"></div>
+                    </button>
+                        
+                    <mat-menu #menu>
+                        <button mat-menu-item (click)="navigateToBroadCast()">
+                            <mat-icon>play_circle_outline</mat-icon>
+                            <span>{{'broadcast.activeBroadcast' | translate}}</span>
+                        </button>
+                        <button mat-menu-item (click)="scheduleBroadcast('reschedule')">
+                            <mat-icon>schedule</mat-icon>
+                            <span>{{'broadcast.rescheduleBroadcast' | translate}}</span>
+                        </button>
+                        <button mat-menu-item (click)="deleteBroadcast()">
+                            <mat-icon>delete_forever</mat-icon>
+                            <span>{{'broadcast.deleteBroadcast' | translate}}</span>
+                        </button>
+                    </mat-menu>
+                </span> -->
+                <!-- <span fxLayout="column">
+                    <app-live-broadcast></app-live-broadcast>
+                </span> -->
+                <span fxLayout="column">
+                    <button mat-icon-button [routerLink]="['/layouts/notifications']">
+                        <mat-icon matTooltip="Notifications" matBadge="{{notificationsCount}}" matBadgePosition="above after"  
+                        matBadgeColor="warn" matBadgeSize="small" matBadgeOverlap="true">notifications</mat-icon>
+                    </button>
+                </span>
+                <!-- <span fxLayout="column">
+                    <button mat-icon-button>
+                        <mat-icon>help_outline</mat-icon>
+                    </button>
+                </span>  -->
+                <span fxLayout="column">
+                    <button mat-icon-button (click)="navigateToSettings()">
+                        <mat-icon>settings</mat-icon>
+                    </button>
+                </span>
+                
+            </div>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
